@@ -25,10 +25,10 @@ export class AuthService {
     return this.generateToken({ id: newUser._id, role: newUser.role });
   }
 
-  async login(email: string, password: string) {
+  async signin(email: string, password: string) {
     const user = await this.userService.findByEmail(email);
     if (!user || !(await bcrypt.compare(password, user.password))) {
-      throw new ForbiddenException('incorrect username or password');
+      throw new ForbiddenException('incorrect email or password');
     }
     return this.generateToken({ id: user._id, role: user.role });
   }

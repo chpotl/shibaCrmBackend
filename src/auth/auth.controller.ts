@@ -18,4 +18,16 @@ export class AuthController {
     res.cookie('refresh_token', refresh_token);
     return { access_token };
   }
+  @Post('signin')
+  async loginUser(
+    @Body() body: AuthUserDto,
+    @Res({ passthrough: true }) res: any,
+  ) {
+    const { refresh_token, access_token } = await this.authService.signin(
+      body.email,
+      body.password,
+    );
+    res.cookie('refresh_token', refresh_token);
+    return { access_token };
+  }
 }
