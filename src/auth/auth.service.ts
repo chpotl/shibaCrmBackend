@@ -45,7 +45,6 @@ export class AuthService {
       throw new UnauthorizedException('you dont have refresh token');
     }
     const payload = this.jwtService.verify(refresh_token);
-    console.log(payload);
     if (!payload) {
       throw new UnauthorizedException('auth error');
     }
