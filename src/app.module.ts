@@ -6,6 +6,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
+import { OrderModule } from './order/order.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { UserModule } from './user/user.module';
     MongooseModule.forRoot(process.env.DB_CONNECT),
     AuthModule,
     UserModule,
+    OrderModule,
   ],
   controllers: [AppController],
   providers: [

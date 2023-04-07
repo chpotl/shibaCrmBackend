@@ -8,6 +8,7 @@ import { plainToInstance } from 'class-transformer';
 import { map, Observable } from 'rxjs';
 
 interface ClassConstructor {
+  // eslint-disable-next-line @typescript-eslint/ban-types
   new (...args: any[]): {};
 }
 
