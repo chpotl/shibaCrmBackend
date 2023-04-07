@@ -25,6 +25,7 @@ export enum Currency {
   EUR = 'EYR',
 }
 
+@Schema()
 class PaymentMethod extends Document {
   @Prop({ required: true, type: mongoose.Schema.Types.ObjectId, ref: 'Bank' })
   bank: Bank;
@@ -32,7 +33,9 @@ class PaymentMethod extends Document {
   @Prop({ required: true })
   screenShotUrl: string;
 }
+const PaymentMethodSchema = SchemaFactory.createForClass(PaymentMethod);
 
+@Schema()
 class ContactInfo extends Document {
   @Prop({ required: true })
   name: string;
@@ -43,7 +46,9 @@ class ContactInfo extends Document {
   @Prop({})
   telegram: string;
 }
+const ContactInfoSchema = SchemaFactory.createForClass(ContactInfo);
 
+@Schema()
 class DeliveryInfo extends Document {
   @Prop({ required: true })
   name: string;
@@ -58,6 +63,7 @@ class DeliveryInfo extends Document {
   })
   delivery: DeliveryMethod;
 }
+const DeliveryInfoSchema = SchemaFactory.createForClass(DeliveryInfo);
 
 @Schema()
 export class Order extends Document {
@@ -115,13 +121,13 @@ export class Order extends Document {
   })
   orderStatus: number; //order status
 
-  @Prop({ type: PaymentMethod })
+  @Prop({ type: PaymentMethodSchema })
   paymentMethod: PaymentMethod; //payment method chosen by user
 
-  @Prop({ type: ContactInfo })
+  @Prop({ type: ContactInfoSchema })
   contactInfo: ContactInfo; //payment method chosen by user
 
-  @Prop({ type: DeliveryInfo })
+  @Prop({ type: DeliveryInfoSchema })
   deliveryInfo: DeliveryInfo; //payment method chosen by user
 
   @Prop({ required: true, type: mongoose.Schema.Types.ObjectId, ref: 'User' })

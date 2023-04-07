@@ -30,10 +30,15 @@ export class OrderService {
   ) {}
 
   async createOrder(managerId: string, createOrderDto: CreateOrderDto) {
+    console.log(createOrderDto);
     return await this.orderModel.create({
       manager: managerId,
       ...createOrderDto,
     });
+  }
+
+  async getAllOrders() {
+    return await this.orderModel.find();
   }
 
   async createBank(createBankDto: CreateBankDto) {

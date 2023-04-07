@@ -11,6 +11,7 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { Currency } from '../schemas/order.schema';
+import { Type } from 'class-transformer';
 
 class PaymentMethod {
   @IsMongoId()
@@ -88,11 +89,14 @@ export class CreateOrderDto {
   // orderStatus: number; //order status
 
   @ValidateNested()
+  @Type(() => PaymentMethod)
   paymentMethod: PaymentMethod; //payment method chosen by user
 
   @ValidateNested()
+  @Type(() => ContactInfo)
   contactInfo: ContactInfo; //payment method chosen by user
 
   @ValidateNested()
+  @Type(() => DeliveryInfo)
   deliveryInfo: DeliveryInfo; //payment method chosen by user
 }

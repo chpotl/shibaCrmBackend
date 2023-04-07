@@ -20,6 +20,10 @@ import { CreateOrderDto } from './dtos/create-order.dto';
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
+  @Get()
+  getAllOrders() {
+    return this.orderService.getAllOrders();
+  }
   @Post(':id')
   createOrder(@Body() body: CreateOrderDto, @Param('id') managerId: string) {
     return this.orderService.createOrder(managerId, body);
