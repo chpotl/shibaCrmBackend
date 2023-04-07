@@ -11,7 +11,10 @@ import {
   SubcategorySchema,
 } from './schemas/category.schema';
 import { Bank, BankSchema } from './schemas/bank.schema';
-import { Delivery, DeliverySchema } from './schemas/delivery.schema';
+import {
+  DeliveryMethod,
+  DeliveryMethodSchema,
+} from './schemas/delivery.schema';
 
 @Module({
   imports: [
@@ -21,7 +24,7 @@ import { Delivery, DeliverySchema } from './schemas/delivery.schema';
       { name: Category.name, schema: CategorySchema },
       { name: Subcategory.name, schema: SubcategorySchema },
       { name: Bank.name, schema: BankSchema },
-      { name: Delivery.name, schema: DeliverySchema },
+      { name: DeliveryMethod.name, schema: DeliveryMethodSchema },
     ]),
   ],
   controllers: [OrderController],

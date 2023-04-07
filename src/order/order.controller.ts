@@ -13,10 +13,27 @@ import { OrderService } from './order.service';
 import { UpdateBankDto } from './dtos/update-bank.dto';
 import { CreateCategoryDto } from './dtos/create-category.dto';
 import { CreateSubcategoryDto } from './dtos/create-subcategory.dto';
+import { CreateDeliveryMethodDto } from './dtos/create-deliveryMethod.dto';
+import { CreateOrderDto } from './dtos/create-order.dto';
 
 @Controller('order')
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
+
+  @Post(':id')
+  createOrder(@Body() body: CreateOrderDto, @Param('id') managerId: string) {
+    return this.orderService.createOrder(managerId, body);
+  }
+
+  @Get('delivery')
+  getAllDeliveryMethods() {
+    return this.orderService.getAllDeliveryMethods();
+  }
+
+  @Post('delivery')
+  createDeliveryMethod(@Body() body: CreateDeliveryMethodDto) {
+    return this.orderService.createDeliveryMethod(body);
+  }
 
   @Get('bank')
   getAllBanks() {

@@ -1,4 +1,5 @@
 import {
+  IsEnum,
   IsMongoId,
   IsNumber,
   IsOptional,
@@ -9,6 +10,7 @@ import {
   MinLength,
   ValidateNested,
 } from 'class-validator';
+import { Currency } from '../schemas/order.schema';
 
 class PaymentMethod {
   @IsMongoId()
@@ -62,6 +64,9 @@ export class CreateOrderDto {
   @IsNumber()
   rubblePrice: number; //product price in rubbles
 
+  @IsEnum(Currency)
+  currency: number; //product price in rubbles
+
   @IsNumber()
   marketplaceDelivery: number; //delivery price form poizon/stockx to china
 
@@ -76,7 +81,7 @@ export class CreateOrderDto {
 
   @IsString()
   @IsOptional()
-  @MinLength(100)
+  @MinLength(10)
   comment: string; //order comment
 
   // @Prop({ required: true, default: OrderState.waitingPayment })

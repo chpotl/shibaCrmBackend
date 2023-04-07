@@ -3,7 +3,7 @@ import mongoose, { Document } from 'mongoose';
 import { User } from 'src/user/schemas/user.schema';
 import { Category, Subcategory } from './category.schema';
 import { Bank } from './bank.schema';
-import { Delivery } from './delivery.schema';
+import { DeliveryMethod } from './delivery.schema';
 
 export enum OrderState {
   waitingPayment,
@@ -17,6 +17,12 @@ export enum OrderState {
   inRussia,
   finalDelivery,
   finished,
+}
+
+export enum Currency {
+  USD = 'USD',
+  CNY = 'CNY',
+  EUR = 'EYR',
 }
 
 class PaymentMethod extends Document {
@@ -48,9 +54,9 @@ class DeliveryInfo extends Document {
   @Prop({
     required: true,
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Delivery',
+    ref: 'DeliveryMethod',
   })
-  delivery: Delivery;
+  delivery: DeliveryMethod;
 }
 
 @Schema()
@@ -78,6 +84,9 @@ export class Order extends Document {
   @Prop({ required: true })
   unitPrice: number; //price for 1 usd/eur/cny
 
+  @Prop({ required: true, enum: Currency })
+  currency: Currency; //product price in usd/eur/cny
+
   @Prop({ required: true })
   productPrice: number; //product price in usd/eur/cny
 
@@ -99,7 +108,11 @@ export class Order extends Document {
   @Prop({ required: true, default: '' })
   comment: string; //order comment
 
-  @Prop({ required: true, default: OrderState.waitingPayment })
+  @Prop({
+    required: true,
+    default: OrderState.waitingPayment,
+    enum: OrderState,
+  })
   orderStatus: number; //order status
 
   @Prop({ type: PaymentMethod })
@@ -110,6 +123,9 @@ export class Order extends Document {
 
   @Prop({ type: DeliveryInfo })
   deliveryInfo: DeliveryInfo; //payment method chosen by user
+
+  @Prop({ required: true, type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+  manager: User;
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order);

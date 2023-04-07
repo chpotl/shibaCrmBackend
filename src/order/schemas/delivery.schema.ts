@@ -3,7 +3,7 @@ import mongoose, { Document } from 'mongoose';
 import { User } from 'src/user/schemas/user.schema';
 
 @Schema()
-export class Delivery extends Document {
+export class DeliveryMethod extends Document {
   @Prop({ required: true })
   name: string;
 
@@ -11,4 +11,5 @@ export class Delivery extends Document {
   price: number;
 }
 
-export const DeliverySchema = SchemaFactory.createForClass(Delivery);
+export const DeliveryMethodSchema =
+  SchemaFactory.createForClass(DeliveryMethod);

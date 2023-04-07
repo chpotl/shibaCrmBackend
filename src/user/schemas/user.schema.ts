@@ -6,10 +6,8 @@ export enum Role {
   manager = 'manager',
 }
 
-export type UserDocument = User & Document;
-
 @Schema()
-export class User {
+export class User extends Document {
   @Prop({ required: true, trim: true, unique: true, lowercase: true })
   email: string;
 
