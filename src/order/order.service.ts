@@ -5,6 +5,7 @@ import { Model } from 'mongoose';
 import { Category, Subcategory } from './schemas/category.schema';
 import { CreateBankDto } from './dtos/create-bank.dto';
 import { Bank } from './schemas/bank.schema';
+import { UpdateBankDto } from './dtos/update-bank.dto';
 
 @Injectable()
 export class OrderService {
@@ -19,5 +20,12 @@ export class OrderService {
 
   async createBank(createBankDto: CreateBankDto) {
     return await this.bankModel.create(createBankDto);
+  }
+  async getAllBanks() {
+    return await this.bankModel.find();
+  }
+
+  async updateBank(bankId: string, updateBankDto: UpdateBankDto) {
+    return await this.bankModel.findByIdAndUpdate(bankId, updateBankDto);
   }
 }
