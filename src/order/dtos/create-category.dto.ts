@@ -1,9 +1,10 @@
-import { IsMongoId, IsString, MaxLength } from 'class-validator';
+import { IsMongoId, IsOptional, IsString, MaxLength } from 'class-validator';
 
-export class CreateSubcategoryDto {
+export class CreateCategoryDto {
   @IsString()
   name: string;
 
   @IsMongoId({ each: true })
+  @IsOptional()
   subcategory: string[];
 }

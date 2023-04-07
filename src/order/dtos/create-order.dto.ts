@@ -18,7 +18,7 @@ class PaymentMethod {
   screenShotUrl: string;
 }
 
-class ContactInfo extends Document {
+class ContactInfo {
   @IsString()
   name: string;
 
@@ -29,7 +29,7 @@ class ContactInfo extends Document {
   telegram: string;
 }
 
-class DeliveryInfo extends Document {
+class DeliveryInfo {
   @IsString()
   name: string;
 
@@ -40,7 +40,7 @@ class DeliveryInfo extends Document {
   delivery: string;
 }
 
-export class CreateCategoryDto {
+export class CreateOrderDto {
   @IsString()
   url: string; //link to poizon/stockx/farfetch
 

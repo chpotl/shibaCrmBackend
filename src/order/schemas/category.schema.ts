@@ -7,7 +7,10 @@ export class Category extends Document {
   @Prop({ required: true })
   name: string;
 
-  @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: 'Bank' })
+  @Prop({
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: 'Subcategory',
+  })
   subcategory: Subcategory[];
 }
 
