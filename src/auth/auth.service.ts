@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
+import { User } from 'src/user/schemas/user.schema';
 import { UserService } from 'src/user/user.service';
 
 @Injectable()
@@ -22,7 +23,7 @@ export class AuthService {
     }
     const hash = await bcrypt.hash(password, 2);
     const newUser = await this.userService.createUser(email, hash);
-    return this.generateToken({ id: newUser._id, role: newUser.role });
+    return this.generateToken({ id: newUser._id, role: newUser.role }, newUser);
   }
 
   async signin(email: string, password: string) {
@@ -30,13 +31,14 @@ export class AuthService {
     if (!user || !(await bcrypt.compare(password, user.password))) {
       throw new ForbiddenException('incorrect email or password');
     }
-    return this.generateToken({ id: user._id, role: user.role });
+    return this.generateToken({ id: user._id, role: user.role }, user);
   }
 
-  private generateToken(payload: any) {
+  private generateToken(payload: any, user: User) {
     return {
       refresh_token: this.jwtService.sign(payload, { expiresIn: '1d' }),
       access_token: this.jwtService.sign(payload, { expiresIn: '15m' }),
+      user,
     };
   }
 
@@ -48,6 +50,15 @@ export class AuthService {
     if (!payload) {
       throw new UnauthorizedException('auth error');
     }
-    return this.generateToken({ id: payload.id, role: payload.role });
+    return {
+      refresh_token: this.jwtService.sign(
+        { id: payload.id, role: payload.role },
+        { expiresIn: '1d' },
+      ),
+      access_token: this.jwtService.sign(
+        { id: payload.id, role: payload.role },
+        { expiresIn: '15m' },
+      ),
+    };
   }
 }
