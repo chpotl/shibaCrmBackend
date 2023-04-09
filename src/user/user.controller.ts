@@ -10,7 +10,6 @@ export class UserController {
 
   @Serialize(UserDto)
   @UseGuards(JwtAuthGuard)
-  @Get('me')
   async getMe(@Req() req: any) {
     return this.userService.findById(req.user.id);
   }
