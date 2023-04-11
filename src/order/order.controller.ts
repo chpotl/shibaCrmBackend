@@ -15,6 +15,8 @@ import { CreateCategoryDto } from './dtos/create-category.dto';
 import { CreateSubcategoryDto } from './dtos/create-subcategory.dto';
 import { CreateDeliveryMethodDto } from './dtos/create-deliveryMethod.dto';
 import { CreateOrderDto } from './dtos/create-order.dto';
+import { UpdateParamsDto } from './dtos/update-params.dto';
+import { Serialize } from 'src/interceptors/serialize.interceptor';
 
 @Controller('order')
 export class OrderController {
@@ -24,6 +26,7 @@ export class OrderController {
   getAllOrders() {
     return this.orderService.getAllOrders();
   }
+
   @Post(':id')
   createOrder(@Body() body: CreateOrderDto, @Param('id') managerId: string) {
     return this.orderService.createOrder(managerId, body);
@@ -70,5 +73,15 @@ export class OrderController {
     @Param('id') categoryId: string,
   ) {
     return this.orderService.createSubategory(categoryId, body);
+  }
+
+  @Get('params')
+  getParams() {
+    return this.orderService.getParams();
+  }
+
+  @Patch('params')
+  async updateParams(@Body() body: UpdateParamsDto) {
+    return this.orderService.updateParams(body);
   }
 }

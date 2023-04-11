@@ -28,6 +28,7 @@ export class AuthController {
     @Body() body: AuthUserDto,
     @Res({ passthrough: true }) res: any,
   ) {
+    console.log(body);
     const { refresh_token, access_token, user } = await this.authService.signin(
       body.email,
       body.password,

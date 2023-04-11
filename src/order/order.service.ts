@@ -15,6 +15,8 @@ import { CreateSubcategoryDto } from './dtos/create-subcategory.dto';
 import { CreateOrderDto } from './dtos/create-order.dto';
 import { DeliveryMethod } from './schemas/delivery.schema';
 import { CreateDeliveryMethodDto } from './dtos/create-deliveryMethod.dto';
+import { Params } from './schemas/params.schema';
+import { UpdateParamsDto } from './dtos/update-params.dto';
 
 @Injectable()
 export class OrderService {
@@ -27,6 +29,8 @@ export class OrderService {
     private readonly bankModel: Model<Bank>,
     @InjectModel(DeliveryMethod.name)
     private readonly deliveryMethodModel: Model<DeliveryMethod>,
+    @InjectModel(Params.name)
+    private readonly paramsModel: Model<Params>,
   ) {}
 
   async createOrder(managerId: string, createOrderDto: CreateOrderDto) {
@@ -85,5 +89,16 @@ export class OrderService {
 
   async getAllDeliveryMethods() {
     return await this.deliveryMethodModel.find();
+  }
+
+  async getParams() {
+    return await this.paramsModel.find();
+  }
+  async updateParams(updateParamsDto: UpdateParamsDto) {
+    if (!Object.keys(updateParamsDto).length) {
+      console.log(updateParamsDto);
+      throw new BadRequestException('fields are incorrect');
+    }
+    return await this.paramsModel.updateOne({}, updateParamsDto, { new: true });
   }
 }
