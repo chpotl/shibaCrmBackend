@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -17,6 +18,7 @@ import { CreateDeliveryMethodDto } from './dtos/create-deliveryMethod.dto';
 import { CreateOrderDto } from './dtos/create-order.dto';
 import { UpdateParamsDto } from './dtos/update-params.dto';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
+import { CreatePromocodeDto } from './dtos/create-promocode.dto';
 
 @Controller('order')
 export class OrderController {
@@ -25,11 +27,6 @@ export class OrderController {
   @Get()
   getAllOrders() {
     return this.orderService.getAllOrders();
-  }
-
-  @Post(':id')
-  createOrder(@Body() body: CreateOrderDto, @Param('id') managerId: string) {
-    return this.orderService.createOrder(managerId, body);
   }
 
   @Get('delivery')
@@ -83,5 +80,24 @@ export class OrderController {
   @Patch('params')
   async updateParams(@Body() body: UpdateParamsDto) {
     return this.orderService.updateParams(body);
+  }
+
+  @Get('promocode/:code')
+  async getPromocode(@Param('code') code: string) {
+    return this.orderService.getPromocode(code);
+  }
+
+  @Delete('promocode/:code')
+  async deletePromocode(@Param('code') code: string) {
+    return this.orderService.deletePromocode(code);
+  }
+  @Post('promocode')
+  async createPromocode(@Body() body: CreatePromocodeDto) {
+    return this.orderService.createPromocode(body);
+  }
+
+  @Post(':id')
+  createOrder(@Body() body: CreateOrderDto, @Param('id') managerId: string) {
+    return this.orderService.createOrder(managerId, body);
   }
 }

@@ -16,6 +16,7 @@ import {
   DeliveryMethodSchema,
 } from './schemas/delivery.schema';
 import { Params, ParamsSchema } from './schemas/params.schema';
+import { Promocode, PromocodeSchema } from './schemas/promocode.schema';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { Params, ParamsSchema } from './schemas/params.schema';
       { name: Bank.name, schema: BankSchema },
       { name: DeliveryMethod.name, schema: DeliveryMethodSchema },
       { name: Params.name, schema: ParamsSchema },
+      { name: Promocode.name, schema: PromocodeSchema },
     ]),
   ],
   controllers: [OrderController],

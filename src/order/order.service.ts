@@ -17,6 +17,8 @@ import { DeliveryMethod } from './schemas/delivery.schema';
 import { CreateDeliveryMethodDto } from './dtos/create-deliveryMethod.dto';
 import { Params } from './schemas/params.schema';
 import { UpdateParamsDto } from './dtos/update-params.dto';
+import { CreatePromocodeDto } from './dtos/create-promocode.dto';
+import { Promocode } from './schemas/promocode.schema';
 
 @Injectable()
 export class OrderService {
@@ -31,6 +33,8 @@ export class OrderService {
     private readonly deliveryMethodModel: Model<DeliveryMethod>,
     @InjectModel(Params.name)
     private readonly paramsModel: Model<Params>,
+    @InjectModel(Promocode.name)
+    private readonly promocodeModel: Model<Promocode>,
   ) {}
 
   async createOrder(managerId: string, createOrderDto: CreateOrderDto) {
@@ -97,8 +101,25 @@ export class OrderService {
   async updateParams(updateParamsDto: UpdateParamsDto) {
     if (!Object.keys(updateParamsDto).length) {
       console.log(updateParamsDto);
-      throw new BadRequestException('fields are incorrect');
+      return new BadRequestException('fields are incorrect');
     }
     return await this.paramsModel.updateOne({}, updateParamsDto, { new: true });
+  }
+  async getPromocode(code: string) {
+    const promocode = await this.promocodeModel.findOne({ code });
+    if (!promocode) {
+      return new NotFoundException('no such promocode');
+    }
+    return promocode;
+  }
+  async deletePromocode(code: string) {
+    const promocode = await this.promocodeModel.findOne({ code });
+    if (!promocode) {
+      return new NotFoundException('no such promocode');
+    }
+    return await this.promocodeModel.findOneAndRemove({ code });
+  }
+  async createPromocode(createPromocodeDto: CreatePromocodeDto) {
+    return await this.promocodeModel.create(createPromocodeDto);
   }
 }
