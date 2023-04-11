@@ -8,6 +8,12 @@ export enum Role {
 
 @Schema()
 export class User extends Document {
+  @Prop({ required: true })
+  name: string;
+
+  @Prop({ required: true })
+  surname: string;
+
   @Prop({ required: true, trim: true, unique: true, lowercase: true })
   email: string;
 

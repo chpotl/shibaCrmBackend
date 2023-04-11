@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
+import { CreateUserDto } from 'src/user/dtos/create-user.dto';
 import { User } from 'src/user/schemas/user.schema';
 import { UserService } from 'src/user/user.service';
 
@@ -16,13 +17,12 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async signup(email: string, password: string) {
-    const user = await this.userService.findByEmail(email);
+  async signup(createUserDto: CreateUserDto) {
+    const user = await this.userService.findByEmail(createUserDto.email);
     if (user) {
       throw new BadRequestException('user already exist');
     }
-    const hash = await bcrypt.hash(password, 2);
-    const newUser = await this.userService.createUser(email, hash);
+    const newUser = await this.userService.createUser(createUserDto);
     return this.generateToken({ id: newUser._id, role: newUser.role }, newUser);
   }
 

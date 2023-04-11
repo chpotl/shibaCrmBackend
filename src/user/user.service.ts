@@ -1,25 +1,60 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from './schemas/user.schema';
+import * as bcrypt from 'bcrypt';
+import { CreateUserDto } from './dtos/create-user.dto';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectModel(User.name) private readonly userModel: Model<User>,
   ) {}
-  async createUser(email: string, password: string) {
-    const user = await this.userModel.findOne({ email });
+  async createUser(createUserDto: CreateUserDto) {
+    const user = await this.userModel.findOne({ email: createUserDto.email });
     if (user) {
       throw new BadRequestException('user with such email already exist');
     }
-    return await this.userModel.create({ email, password });
+    const hash = await bcrypt.hash(createUserDto.password, 2);
+    return await this.userModel.create({
+      name: createUserDto.name,
+      surname: createUserDto.surname,
+      email: createUserDto.email,
+      password: hash,
+    });
+  }
+
+  async deleteUser(userId: string) {
+    const user = await this.userModel.findByIdAndDelete(userId);
+    if (!user) {
+      throw new NotFoundException('user not found');
+    }
+    return user;
   }
   async findById(id: string) {
-    return await this.userModel.findById(id);
+    const user = await this.userModel.findById(id);
+    if (!user) {
+      throw new NotFoundException('user not found');
+    }
+    return user;
+  }
+  async findAll() {
+    const users = await this.userModel.find();
+    if (!users) {
+      throw new NotFoundException('user not found');
+    }
+    return users;
   }
 
   async findByEmail(email: string) {
-    return await this.userModel.findOne({ email });
+    const user = await this.userModel.findOne({ email });
+    if (!user) {
+      throw new NotFoundException('user not found');
+    }
+    return user;
   }
 }

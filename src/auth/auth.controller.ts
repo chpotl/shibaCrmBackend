@@ -3,6 +3,7 @@ import { AuthService } from './auth.service';
 import { AuthUserDto } from './dtos/auth-user.dto';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { AuthDto } from './dtos/auth.dto';
+import { CreateUserDto } from 'src/user/dtos/create-user.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -11,12 +12,11 @@ export class AuthController {
   @Serialize(AuthDto)
   @Post('signup')
   async createUser(
-    @Body() body: AuthUserDto,
+    @Body() body: CreateUserDto,
     @Res({ passthrough: true }) res: any,
   ) {
     const { refresh_token, access_token, user } = await this.authService.signup(
-      body.email,
-      body.password,
+      body,
     );
     res.cookie('refresh_token', refresh_token);
     return { access_token, user };
@@ -28,7 +28,6 @@ export class AuthController {
     @Body() body: AuthUserDto,
     @Res({ passthrough: true }) res: any,
   ) {
-    console.log(body);
     const { refresh_token, access_token, user } = await this.authService.signin(
       body.email,
       body.password,
@@ -39,7 +38,6 @@ export class AuthController {
 
   @Post('refresh')
   async refreshToken(@Req() req: any, @Res({ passthrough: true }) res: any) {
-    // console.log(req.cookies);
     const { refresh_token, access_token } = await this.authService.refreshToken(
       req.cookies?.refresh_token,
     );
