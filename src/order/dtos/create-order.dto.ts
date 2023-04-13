@@ -21,28 +21,6 @@ class PaymentMethod {
   screenShotUrl: string;
 }
 
-class ContactInfo {
-  @IsString()
-  name: string;
-
-  @IsPhoneNumber()
-  phone: string;
-
-  @IsString()
-  telegram: string;
-}
-
-class DeliveryInfo {
-  @IsString()
-  name: string;
-
-  @IsPhoneNumber()
-  phone: string;
-
-  @IsMongoId()
-  delivery: string;
-}
-
 export class CreateOrderDto {
   @IsString()
   url: string; //link to poizon/stockx/farfetch
@@ -91,12 +69,4 @@ export class CreateOrderDto {
   @ValidateNested()
   @Type(() => PaymentMethod)
   paymentMethod: PaymentMethod; //payment method chosen by user
-
-  @ValidateNested()
-  @Type(() => ContactInfo)
-  contactInfo: ContactInfo; //payment method chosen by user
-
-  @ValidateNested()
-  @Type(() => DeliveryInfo)
-  deliveryInfo: DeliveryInfo; //payment method chosen by user
 }

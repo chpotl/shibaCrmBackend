@@ -19,6 +19,7 @@ import { CreateOrderDto } from './dtos/create-order.dto';
 import { UpdateParamsDto } from './dtos/update-params.dto';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { CreatePromocodeDto } from './dtos/create-promocode.dto';
+import { AddOrderInfoDto } from './dtos/add-orderinfo.dto';
 
 @Controller('order')
 export class OrderController {
@@ -99,5 +100,10 @@ export class OrderController {
   @Post(':id')
   createOrder(@Body() body: CreateOrderDto, @Param('id') managerId: string) {
     return this.orderService.createOrder(managerId, body);
+  }
+
+  @Patch(':id')
+  addOrderInfo(@Body() body: AddOrderInfoDto, @Param('id') orderId: string) {
+    return this.orderService.addOrderInfo(orderId, body);
   }
 }

@@ -19,6 +19,7 @@ import { Params } from './schemas/params.schema';
 import { UpdateParamsDto } from './dtos/update-params.dto';
 import { CreatePromocodeDto } from './dtos/create-promocode.dto';
 import { Promocode } from './schemas/promocode.schema';
+import { AddOrderInfoDto } from './dtos/add-orderinfo.dto';
 
 @Injectable()
 export class OrderService {
@@ -42,6 +43,16 @@ export class OrderService {
     return await this.orderModel.create({
       manager: managerId,
       ...createOrderDto,
+    });
+  }
+
+  async addOrderInfo(orderId: string, addOrderInfoDto: AddOrderInfoDto) {
+    const order = await this.orderModel.findById(orderId);
+    if (!order) {
+      return new NotFoundException('order not found');
+    }
+    return await this.orderModel.findByIdAndUpdate(orderId, addOrderInfoDto, {
+      new: true,
     });
   }
 
