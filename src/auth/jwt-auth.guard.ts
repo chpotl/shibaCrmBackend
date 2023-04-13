@@ -16,9 +16,6 @@ export class JwtAuthGuard implements CanActivate {
         ROLES_KEY,
         [context.getHandler(), context.getClass()],
       );
-      if (!requiredRoles) {
-        return true;
-      }
       const request = context.switchToHttp().getRequest();
       if (!request.headers.authorization) {
         return false;
@@ -28,8 +25,14 @@ export class JwtAuthGuard implements CanActivate {
         return false;
       }
       const user = this.jwtService.verify(token);
+      console.log(user);
+      if (!user) {
+        return false;
+      }
       request.user = user;
-      // return user.roles.some((role) => requiredRoles.includes(role.value));
+      if (!requiredRoles) {
+        return true;
+      }
       return requiredRoles.includes(user.role);
     } catch (e) {
       return false;
