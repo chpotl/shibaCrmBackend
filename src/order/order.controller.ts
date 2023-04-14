@@ -23,38 +23,45 @@ import { CreatePromocodeDto } from './dtos/create-promocode.dto';
 import { AddOrderInfoDto } from './dtos/add-orderinfo.dto';
 import { Roles } from 'src/auth/roles-auth.decorator';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { ApiBearerAuth, ApiBody, ApiProperty, ApiTags } from '@nestjs/swagger';
 
+@ApiBearerAuth()
 @Controller('order')
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
-
+  @ApiTags('order')
   @Get()
   getAllOrders() {
     return this.orderService.getAllOrders();
   }
 
+  @ApiTags('delivery')
   @Get('delivery')
   getAllDeliveryMethods() {
     return this.orderService.getAllDeliveryMethods();
   }
 
+  @ApiTags('delivery')
   @UseGuards(JwtAuthGuard)
   @Post('delivery')
   createDeliveryMethod(@Body() body: CreateDeliveryMethodDto) {
     return this.orderService.createDeliveryMethod(body);
   }
 
+  @ApiTags('bank')
   @Get('bank')
   getAllBanks() {
     return this.orderService.getAllBanks();
   }
 
+  @ApiTags('bank')
   @UseGuards(JwtAuthGuard)
   @Post('bank')
   createBank(@Body() body: CreateBankDto) {
     return this.orderService.createBank(body);
   }
 
+  @ApiTags('bank')
   @Roles('admin')
   @UseGuards(JwtAuthGuard)
   @Patch('bank/:id')
@@ -62,17 +69,20 @@ export class OrderController {
     return this.orderService.updateBank(bankId, body);
   }
 
+  @ApiTags('category')
   @Get('category')
   getAllCategories() {
     return this.orderService.getAllCategories();
   }
 
+  @ApiTags('category')
   @UseGuards(JwtAuthGuard)
   @Post('category')
   createCategory(@Body() body: CreateCategoryDto) {
     return this.orderService.createCategory(body);
   }
 
+  @ApiTags('category')
   @UseGuards(JwtAuthGuard)
   @Post('subcategory/:id')
   createSubategory(
@@ -82,28 +92,33 @@ export class OrderController {
     return this.orderService.createSubategory(categoryId, body);
   }
 
+  @ApiTags('prams')
   @Get('params')
   getParams() {
     return this.orderService.getParams();
   }
 
+  @ApiTags('prams')
   @UseGuards(JwtAuthGuard)
   @Patch('params')
   async updateParams(@Body() body: UpdateParamsDto) {
     return this.orderService.updateParams(body);
   }
 
+  @ApiTags('promocode')
   @Get('promocode/:code')
   async getPromocode(@Param('code') code: string) {
     return this.orderService.getPromocode(code);
   }
 
+  @ApiTags('promocode')
   @UseGuards(JwtAuthGuard)
   @Delete('promocode/:code')
   async deletePromocode(@Param('code') code: string) {
     return this.orderService.deletePromocode(code);
   }
 
+  @ApiTags('promocode')
   @UseGuards(JwtAuthGuard)
   @Post('promocode')
   async createPromocode(@Body() body: CreatePromocodeDto) {
@@ -111,13 +126,14 @@ export class OrderController {
   }
 
   // @Roles('admin', 'manager')
+  @ApiTags('order')
   @UseGuards(JwtAuthGuard)
   @Post('')
   createOrder(@Body() body: CreateOrderDto, @Req() req: any) {
     console.log(req.user);
     return this.orderService.createOrder(req.user.id, body);
   }
-
+  @ApiTags('order')
   @Patch(':id')
   addOrderInfo(@Body() body: AddOrderInfoDto, @Param('id') orderId: string) {
     return this.orderService.addOrderInfo(orderId, body);

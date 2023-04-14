@@ -70,6 +70,9 @@ export class Order extends Document {
   @Prop({ required: true })
   url: string; //link to poizon/stockx/farfetch
 
+  @Prop({ required: true })
+  brand: string;
+
   @Prop({
     required: true,
     type: mongoose.Schema.Types.ObjectId,

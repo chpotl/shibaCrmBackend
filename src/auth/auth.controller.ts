@@ -4,7 +4,9 @@ import { AuthUserDto } from './dtos/auth-user.dto';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { AuthDto } from './dtos/auth.dto';
 import { CreateUserDto } from 'src/user/dtos/create-user.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}

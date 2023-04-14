@@ -12,52 +12,62 @@ import {
 } from 'class-validator';
 import { Currency } from '../schemas/order.schema';
 import { Type } from 'class-transformer';
-
-class PaymentMethod {
-  @IsMongoId()
-  bank: string;
-
-  @IsString()
-  screenShotUrl: string;
-}
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateOrderDto {
+  @ApiProperty({ description: 'link to poizon/stockx/farfetch' })
   @IsString()
-  url: string; //link to poizon/stockx/farfetch
+  url: string;
 
+  @ApiProperty({ description: 'product brand' })
+  @IsString()
+  brand: string;
+
+  @ApiProperty({ description: 'product category' })
   @IsMongoId()
-  category: string; //product category
+  category: string;
 
+  @ApiProperty({ description: 'product subcategory' })
   @IsMongoId()
-  subcategory: string; //product subcategory
+  subcategory: string;
 
+  @ApiProperty()
   @IsString({ each: true })
   images: string[];
 
+  @ApiProperty({ description: 'price for 1 usd/eur/cny' })
   @IsNumber()
-  unitPrice: number; //price for 1 usd/eur/cny
+  unitPrice: number;
 
+  @ApiProperty({ description: 'product price in usd/eur/cny' })
   @IsNumber()
-  productPrice: number; //product price in usd/eur/cny
+  productPrice: number;
 
+  @ApiProperty({ description: 'product price in rubbles' })
   @IsNumber()
-  rubblePrice: number; //product price in rubbles
+  rubblePrice: number;
 
+  @ApiProperty({ description: 'currency' })
   @IsEnum(Currency)
-  currency: number; //product price in rubbles
+  currency: number;
 
+  @ApiProperty({ description: 'delivery price form poizon/stockx to china' })
   @IsNumber()
-  marketplaceDelivery: number; //delivery price form poizon/stockx to china
+  marketplaceDelivery: number;
 
+  @ApiProperty({ description: 'delivery price form china to russia' })
   @IsNumber()
-  internationalDelivery: number; //delivery price form china to russia
+  internationalDelivery: number;
 
+  @ApiProperty({ description: 'shiba comission' })
   @IsNumber()
   comission: number; //shiba comission
 
+  @ApiProperty({ description: 'total price in rubbles' })
   @IsNumber()
   totalPrice: number; //total price in rubbles
 
+  @ApiProperty({ description: 'order comment' })
   @IsString()
   @IsOptional()
   @MinLength(10)
@@ -65,8 +75,4 @@ export class CreateOrderDto {
 
   // @Prop({ required: true, default: OrderState.waitingPayment })
   // orderStatus: number; //order status
-
-  @ValidateNested()
-  @Type(() => PaymentMethod)
-  paymentMethod: PaymentMethod; //payment method chosen by user
 }

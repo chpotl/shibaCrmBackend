@@ -20,6 +20,7 @@ async function bootstrap() {
     .setDescription('Api for SHiba CRM')
     .setVersion('1.0')
     .addTag('API')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
