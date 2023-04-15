@@ -23,6 +23,16 @@ export class CreateOrderDto {
   @IsString()
   brand: string;
 
+  @ApiProperty({ description: 'product brand' })
+  @IsString()
+  @IsOptional()
+  size: string;
+
+  @ApiProperty({ description: 'product model' })
+  @IsString()
+  @IsOptional()
+  model: string;
+
   @ApiProperty({ description: 'product category' })
   @IsMongoId()
   category: string;
@@ -49,7 +59,7 @@ export class CreateOrderDto {
 
   @ApiProperty({ description: 'currency' })
   @IsEnum(Currency)
-  currency: number;
+  currency: string;
 
   @ApiProperty({ description: 'delivery price form poizon/stockx to china' })
   @IsNumber()

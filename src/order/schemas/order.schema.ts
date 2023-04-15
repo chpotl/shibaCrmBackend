@@ -73,6 +73,12 @@ export class Order extends Document {
   @Prop({ required: true })
   brand: string;
 
+  @Prop()
+  model: string;
+
+  @Prop()
+  size: string;
+
   @Prop({
     required: true,
     type: mongoose.Schema.Types.ObjectId,
