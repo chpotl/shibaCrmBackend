@@ -45,4 +45,10 @@ export class UpdateParamsDto {
   @Min(0)
   @IsOptional()
   internationalDelivery: number;
+
+  @ApiProperty()
+  @IsNumber()
+  @Min(0)
+  @IsOptional()
+  insurance: number;
 }
