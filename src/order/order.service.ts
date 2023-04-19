@@ -109,7 +109,7 @@ export class OrderService {
   }
 
   async getParams() {
-    return await this.paramsModel.find();
+    return (await this.paramsModel.find())[0];
   }
   async updateParams(updateParamsDto: UpdateParamsDto) {
     if (!Object.keys(updateParamsDto).length) {
