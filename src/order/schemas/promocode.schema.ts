@@ -1,6 +1,4 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { Document } from 'mongoose';
-import { User } from 'src/user/schemas/user.schema';
 import { promoType } from '../enums/promocode.enum';
 
 @Schema()

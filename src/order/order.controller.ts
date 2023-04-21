@@ -18,11 +18,10 @@ import { CreateSubcategoryDto } from './dtos/create-subcategory.dto';
 import { CreateDeliveryMethodDto } from './dtos/create-deliveryMethod.dto';
 import { CreateOrderDto } from './dtos/create-order.dto';
 import { UpdateParamsDto } from './dtos/update-params.dto';
-import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { CreatePromocodeDto } from './dtos/create-promocode.dto';
 import { AddOrderInfoDto } from './dtos/add-orderinfo.dto';
-import { Roles } from 'src/auth/roles-auth.decorator';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { Roles } from '../auth/roles-auth.decorator';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { ApiBearerAuth, ApiBody, ApiProperty, ApiTags } from '@nestjs/swagger';
 
 @ApiBearerAuth()

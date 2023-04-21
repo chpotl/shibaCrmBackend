@@ -8,12 +8,12 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { Serialize } from 'src/interceptors/serialize.interceptor';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { Serialize } from '../interceptors/serialize.interceptor';
 import { UserDto } from './dtos/user.dto';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dtos/create-user.dto';
-import { Roles } from 'src/auth/roles-auth.decorator';
+import { Roles } from '../auth/roles-auth.decorator';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @ApiBearerAuth()

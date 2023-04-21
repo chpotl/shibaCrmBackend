@@ -1,9 +1,9 @@
 import { Body, Controller, Post, Req, Res } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthUserDto } from './dtos/auth-user.dto';
-import { Serialize } from 'src/interceptors/serialize.interceptor';
+import { Serialize } from '../interceptors/serialize.interceptor';
 import { AuthDto } from './dtos/auth.dto';
-import { CreateUserDto } from 'src/user/dtos/create-user.dto';
+import { CreateUserDto } from '../user/dtos/create-user.dto';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('auth')
