@@ -115,6 +115,12 @@ export class Order extends Document {
   internationalDelivery: number; //delivery price form china to russia
 
   @Prop({ required: true })
+  insurance: number; //insurance
+
+  @Prop({ required: true })
+  promocode: string; //insurance
+
+  @Prop({ required: true })
   comission: number; //shiba comission
 
   @Prop({ required: true })

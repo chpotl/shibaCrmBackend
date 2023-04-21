@@ -69,6 +69,14 @@ export class CreateOrderDto {
   @IsNumber()
   internationalDelivery: number;
 
+  @ApiProperty({ description: 'insurance' })
+  @IsNumber()
+  insurance: number;
+
+  @ApiProperty({ description: 'promocode id' })
+  @IsMongoId()
+  promocode: string;
+
   @ApiProperty({ description: 'shiba comission' })
   @IsNumber()
   comission: number; //shiba comission

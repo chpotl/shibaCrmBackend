@@ -20,6 +20,9 @@ export class Params extends Document {
 
   @Prop({ required: true })
   internationalDelivery: number;
+
+  @Prop({ required: true })
+  insurance: number;
 }
 
 export const ParamsSchema = SchemaFactory.createForClass(Params);

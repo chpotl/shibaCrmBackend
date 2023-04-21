@@ -105,6 +105,12 @@ export class OrderController {
   }
 
   @ApiTags('promocode')
+  @Get('promocode/')
+  async getAppPromocodes() {
+    return this.orderService.getAppPromocodes();
+  }
+
+  @ApiTags('promocode')
   @Get('promocode/:code')
   async getPromocode(@Param('code') code: string) {
     return this.orderService.getPromocode(code);
@@ -136,5 +142,10 @@ export class OrderController {
   @Patch(':id')
   addOrderInfo(@Body() body: AddOrderInfoDto, @Param('id') orderId: string) {
     return this.orderService.addOrderInfo(orderId, body);
+  }
+  @ApiTags('exchange')
+  @Get('exchange')
+  getExchangeRates(){
+    return this.orderService.excangeRates()
   }
 }
