@@ -117,8 +117,8 @@ export class Order extends Document {
   @Prop({ required: true })
   insurance: number; //insurance
 
-  @Prop({ required: true })
-  promocode: string; //insurance
+  @Prop()
+  promocode: string; //promocode
 
   @Prop({ required: true })
   comission: number; //shiba comission

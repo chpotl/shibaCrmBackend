@@ -3,6 +3,7 @@ import { Type } from 'class-transformer';
 import {
   IsCreditCard,
   IsMongoId,
+  IsOptional,
   IsPhoneNumber,
   IsString,
   MaxLength,
@@ -62,4 +63,9 @@ export class AddOrderInfoDto {
   @ValidateNested()
   @Type(() => PaymentMethod)
   paymentMethod: PaymentMethod; //payment method chosen by user
+
+  @ApiProperty()
+  @IsOptional()
+  @IsMongoId()
+  promocode: string; //payment method chosen by user
 }

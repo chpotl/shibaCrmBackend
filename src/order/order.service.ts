@@ -21,7 +21,8 @@ import { CreatePromocodeDto } from './dtos/create-promocode.dto';
 import { Promocode } from './schemas/promocode.schema';
 import { AddOrderInfoDto } from './dtos/add-orderinfo.dto';
 import axios from 'axios';
-import {xml2json} from 'xml-js';
+import { xml2json } from 'xml-js';
+import { response } from 'express';
 
 @Injectable()
 export class OrderService {
@@ -109,7 +110,11 @@ export class OrderService {
   }
 
   async getParams() {
-    return (await this.paramsModel.find())[0];
+    const response = JSON.parse(
+      JSON.stringify((await this.paramsModel.find())[0]),
+    );
+    response.banks = JSON.parse(JSON.stringify(await this.bankModel.find()));
+    return response;
   }
   async updateParams(updateParamsDto: UpdateParamsDto) {
     if (!Object.keys(updateParamsDto).length) {
@@ -126,10 +131,10 @@ export class OrderService {
     return promocode;
   }
 
-  async getAppPromocodes(){
-    const allPromocodes = await this.promocodeModel.find()
-    if (!allPromocodes){
-      return new NotFoundException('promocodes not found')
+  async getAppPromocodes() {
+    const allPromocodes = await this.promocodeModel.find();
+    if (!allPromocodes) {
+      return new NotFoundException('promocodes not found');
     }
     return allPromocodes;
   }
