@@ -143,9 +143,14 @@ export class OrderController {
   addOrderInfo(@Body() body: AddOrderInfoDto, @Param('id') orderId: string) {
     return this.orderService.addOrderInfo(orderId, body);
   }
+  @ApiTags('order')
+  @Get(':id')
+  getOrderById(@Param('id') orderId: string) {
+    return this.orderService.getOrderById(orderId);
+  }
   @ApiTags('exchange')
   @Get('exchange')
-  getExchangeRates(){
-    return this.orderService.excangeRates()
+  getExchangeRates() {
+    return this.orderService.excangeRates();
   }
 }

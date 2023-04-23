@@ -63,6 +63,10 @@ export class OrderService {
     return await this.orderModel.find();
   }
 
+  async getOrderById(orderId: string) {
+    return await this.orderModel.findById(orderId);
+  }
+
   async createBank(createBankDto: CreateBankDto) {
     return await this.bankModel.create(createBankDto);
   }
