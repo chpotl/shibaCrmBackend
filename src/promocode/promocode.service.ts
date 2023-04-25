@@ -31,8 +31,11 @@ export class PromocodeService {
     return promocode;
   }
 
-  update(code: string, updatePromocodeDto: UpdatePromocodeDto) {
-    return `This action updates a #${code} promocode`; //TODO
+  async update(code: string, updatePromocodeDto: UpdatePromocodeDto) {
+    return await this.promocodeModel.findOneAndUpdate(
+      { code },
+      updatePromocodeDto,
+    );
   }
 
   async remove(code: string) {

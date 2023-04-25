@@ -19,11 +19,11 @@ export class BankService {
     return await this.bankModel.find();
   }
 
-  async update(id: number, updateBankDto: UpdateBankDto) {
+  async update(id: string, updateBankDto: UpdateBankDto) {
     return await this.bankModel.findByIdAndUpdate(id, updateBankDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} bank`; //TODO
+  async remove(id: string) {
+    return await this.bankModel.findByIdAndDelete(id);
   }
 }

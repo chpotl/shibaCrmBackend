@@ -34,11 +34,11 @@ export class BankController {
   @UseGuards(JwtAuthGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateBankDto: UpdateBankDto) {
-    return this.bankService.update(+id, updateBankDto);
+    return this.bankService.update(id, updateBankDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.bankService.remove(+id);
+    return this.bankService.remove(id);
   }
 }

@@ -42,7 +42,7 @@ export class PromocodeController {
     @Param('code') code: string,
     @Body() updatePromocodeDto: UpdatePromocodeDto,
   ) {
-    return this.promocodeService.update(code, updatePromocodeDto); //TODO
+    return this.promocodeService.update(code, updatePromocodeDto);
   }
 
   @Delete(':code')

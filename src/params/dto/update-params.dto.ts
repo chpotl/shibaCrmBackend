@@ -1,13 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsCreditCard,
-  IsMongoId,
-  IsNumber,
-  IsOptional,
-  IsString,
-  MaxLength,
-  Min,
-} from 'class-validator';
+import { IsNumber, IsOptional, Min } from 'class-validator';
 
 export class UpdateParamsDto {
   @ApiProperty()
