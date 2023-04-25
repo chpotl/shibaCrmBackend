@@ -23,7 +23,7 @@ export class CreateOrderDto {
   @IsString()
   brand: string;
 
-  @ApiProperty({ description: 'product brand' })
+  @ApiProperty({ description: 'product size' })
   @IsString()
   @IsOptional()
   size: string;
@@ -41,7 +41,7 @@ export class CreateOrderDto {
   @IsMongoId()
   subcategory: string;
 
-  @ApiProperty()
+  @ApiProperty({ description: 'product images' })
   @IsString({ each: true })
   images: string[];
 
