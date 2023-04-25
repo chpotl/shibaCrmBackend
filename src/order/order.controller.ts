@@ -10,15 +10,10 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { CreateBankDto } from './dtos/create-bank.dto';
 import { OrderService } from './order.service';
-import { UpdateBankDto } from './dtos/update-bank.dto';
 import { CreateCategoryDto } from './dtos/create-category.dto';
 import { CreateSubcategoryDto } from './dtos/create-subcategory.dto';
-import { CreateDeliveryMethodDto } from './dtos/create-deliveryMethod.dto';
 import { CreateOrderDto } from './dtos/create-order.dto';
-import { UpdateParamsDto } from './dtos/update-params.dto';
-import { CreatePromocodeDto } from './dtos/create-promocode.dto';
 import { AddOrderInfoDto } from './dtos/add-orderinfo.dto';
 import { Roles } from '../auth/roles-auth.decorator';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -32,40 +27,6 @@ export class OrderController {
   @Get()
   getAllOrders() {
     return this.orderService.getAllOrders();
-  }
-
-  @ApiTags('delivery')
-  @Get('delivery')
-  getAllDeliveryMethods() {
-    return this.orderService.getAllDeliveryMethods();
-  }
-
-  @ApiTags('delivery')
-  @UseGuards(JwtAuthGuard)
-  @Post('delivery')
-  createDeliveryMethod(@Body() body: CreateDeliveryMethodDto) {
-    return this.orderService.createDeliveryMethod(body);
-  }
-
-  @ApiTags('bank')
-  @Get('bank')
-  getAllBanks() {
-    return this.orderService.getAllBanks();
-  }
-
-  @ApiTags('bank')
-  @UseGuards(JwtAuthGuard)
-  @Post('bank')
-  createBank(@Body() body: CreateBankDto) {
-    return this.orderService.createBank(body);
-  }
-
-  @ApiTags('bank')
-  @Roles('admin')
-  @UseGuards(JwtAuthGuard)
-  @Patch('bank/:id')
-  updateBank(@Body() body: UpdateBankDto, @Param('id') bankId: string) {
-    return this.orderService.updateBank(bankId, body);
   }
 
   @ApiTags('category')
@@ -89,45 +50,6 @@ export class OrderController {
     @Param('id') categoryId: string,
   ) {
     return this.orderService.createSubategory(categoryId, body);
-  }
-
-  @ApiTags('prams')
-  @Get('params')
-  getParams() {
-    return this.orderService.getParams();
-  }
-
-  @ApiTags('prams')
-  @UseGuards(JwtAuthGuard)
-  @Patch('params')
-  async updateParams(@Body() body: UpdateParamsDto) {
-    return this.orderService.updateParams(body);
-  }
-
-  @ApiTags('promocode')
-  @Get('promocode/')
-  async getAppPromocodes() {
-    return this.orderService.getAppPromocodes();
-  }
-
-  @ApiTags('promocode')
-  @Get('promocode/:code')
-  async getPromocode(@Param('code') code: string) {
-    return this.orderService.getPromocode(code);
-  }
-
-  @ApiTags('promocode')
-  @UseGuards(JwtAuthGuard)
-  @Delete('promocode/:code')
-  async deletePromocode(@Param('code') code: string) {
-    return this.orderService.deletePromocode(code);
-  }
-
-  @ApiTags('promocode')
-  @UseGuards(JwtAuthGuard)
-  @Post('promocode')
-  async createPromocode(@Body() body: CreatePromocodeDto) {
-    return this.orderService.createPromocode(body);
   }
 
   // @Roles('admin', 'manager')

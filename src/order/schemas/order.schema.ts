@@ -2,8 +2,8 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
 import { User } from '../../user/schemas/user.schema';
 import { Category, Subcategory } from './category.schema';
-import { Bank } from './bank.schema';
-import { DeliveryMethod } from './delivery.schema';
+import { Bank } from 'src/bank/schemas/bank.schema';
+import { DeliveryMethod } from 'src/delivery/schemas/delivery.schema';
 
 export enum OrderState {
   waitingPayment,

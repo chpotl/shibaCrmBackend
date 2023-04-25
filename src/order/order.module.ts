@@ -10,13 +10,6 @@ import {
   Subcategory,
   SubcategorySchema,
 } from './schemas/category.schema';
-import { Bank, BankSchema } from './schemas/bank.schema';
-import {
-  DeliveryMethod,
-  DeliveryMethodSchema,
-} from './schemas/delivery.schema';
-import { Params, ParamsSchema } from './schemas/params.schema';
-import { Promocode, PromocodeSchema } from './schemas/promocode.schema';
 
 @Module({
   imports: [
@@ -25,10 +18,6 @@ import { Promocode, PromocodeSchema } from './schemas/promocode.schema';
       { name: Order.name, schema: OrderSchema },
       { name: Category.name, schema: CategorySchema },
       { name: Subcategory.name, schema: SubcategorySchema },
-      { name: Bank.name, schema: BankSchema },
-      { name: DeliveryMethod.name, schema: DeliveryMethodSchema },
-      { name: Params.name, schema: ParamsSchema },
-      { name: Promocode.name, schema: PromocodeSchema },
     ]),
   ],
   controllers: [OrderController],

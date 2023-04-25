@@ -8,7 +8,7 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
-import { promoType } from '../enums/promocode.enum';
+import { promoType } from '../../promocode/enums/promocode.enum';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreatePromocodeDto {

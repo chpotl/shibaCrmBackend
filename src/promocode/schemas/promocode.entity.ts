@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { promoType } from '../enums/promocode.enum';
 import { Document } from 'mongoose';
+import { promoType } from '../enums/promocode.enum';
 
 @Schema()
 export class Promocode extends Document {
