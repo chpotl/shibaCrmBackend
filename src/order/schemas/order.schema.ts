@@ -66,6 +66,15 @@ class DeliveryInfo extends Document {
 const DeliveryInfoSchema = SchemaFactory.createForClass(DeliveryInfo);
 
 @Schema()
+class Image extends Document {
+  @Prop({ required: true })
+  path: string;
+
+  @Prop({ required: true })
+  mimetype: string;
+}
+
+@Schema()
 export class Order extends Document {
   @Prop({ required: true })
   url: string; //link to poizon/stockx/farfetch
@@ -94,7 +103,7 @@ export class Order extends Document {
   subcategory: Subcategory; //product subcategory
 
   @Prop({ required: true })
-  images: string[];
+  images: Image[];
 
   @Prop({ required: true })
   unitPrice: number; //price for 1 usd/eur/cny

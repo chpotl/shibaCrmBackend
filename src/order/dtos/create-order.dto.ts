@@ -2,16 +2,12 @@ import {
   IsEnum,
   IsMongoId,
   IsNumber,
+  IsNumberString,
   IsOptional,
-  IsPhoneNumber,
   IsString,
-  MaxLength,
-  Min,
   MinLength,
-  ValidateNested,
 } from 'class-validator';
 import { Currency } from '../schemas/order.schema';
-import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateOrderDto {
@@ -41,20 +37,24 @@ export class CreateOrderDto {
   @IsMongoId()
   subcategory: string;
 
-  @ApiProperty({ description: 'product images' })
-  @IsString({ each: true })
-  images: string[];
+  @ApiProperty({
+    type: 'string',
+    isArray: true,
+    format: 'binary',
+    required: true,
+  })
+  files: string[];
 
   @ApiProperty({ description: 'price for 1 usd/eur/cny' })
-  @IsNumber()
+  @IsNumberString()
   unitPrice: number;
 
   @ApiProperty({ description: 'product price in usd/eur/cny' })
-  @IsNumber()
+  @IsNumberString()
   productPrice: number;
 
   @ApiProperty({ description: 'product price in rubbles' })
-  @IsNumber()
+  @IsNumberString()
   rubblePrice: number;
 
   @ApiProperty({ description: 'currency' })
@@ -62,23 +62,23 @@ export class CreateOrderDto {
   currency: string;
 
   @ApiProperty({ description: 'delivery price form poizon/stockx to china' })
-  @IsNumber()
+  @IsNumberString()
   marketplaceDelivery: number;
 
   @ApiProperty({ description: 'delivery price form china to russia' })
-  @IsNumber()
+  @IsNumberString()
   internationalDelivery: number;
 
   @ApiProperty({ description: 'insurance' })
-  @IsNumber()
+  @IsNumberString()
   insurance: number;
 
   @ApiProperty({ description: 'shiba comission' })
-  @IsNumber()
+  @IsNumberString()
   comission: number; //shiba comission
 
   @ApiProperty({ description: 'total price in rubbles' })
-  @IsNumber()
+  @IsNumberString()
   totalPrice: number; //total price in rubbles
 
   @ApiProperty({ description: 'order comment' })

@@ -10,6 +10,7 @@ import {
   Subcategory,
   SubcategorySchema,
 } from './schemas/category.schema';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [
@@ -19,6 +20,9 @@ import {
       { name: Category.name, schema: CategorySchema },
       { name: Subcategory.name, schema: SubcategorySchema },
     ]),
+    MulterModule.register({
+      dest: './upload',
+    }),
   ],
   controllers: [OrderController],
   providers: [OrderService],

@@ -23,10 +23,17 @@ export class OrderService {
     private readonly subcategoryModel: Model<Subcategory>,
   ) {}
 
-  async createOrder(managerId: string, createOrderDto: CreateOrderDto) {
-    console.log(createOrderDto);
+  async createOrder(
+    managerId: string,
+    createOrderDto: CreateOrderDto,
+    files: Array<Express.Multer.File>,
+  ) {
+    const images = files.map(
+      (el) => new Object({ path: el.path, mimetype: el.mimetype }),
+    );
     return await this.orderModel.create({
       manager: managerId,
+      images,
       ...createOrderDto,
     });
   }

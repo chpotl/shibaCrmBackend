@@ -3,7 +3,10 @@ import {
   Controller,
   Delete,
   Get,
+  HttpStatus,
   Param,
+  ParseFilePipeBuilder,
+  ParseIntPipe,
   Patch,
   Post,
   Put,
@@ -11,6 +14,7 @@ import {
   UploadedFiles,
   UseGuards,
   UseInterceptors,
+  UsePipes,
 } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { CreateCategoryDto } from './dtos/create-category.dto';
@@ -27,6 +31,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { FilesInterceptor } from '@nestjs/platform-express';
+import { fileMimetypeFilter } from 'src/utils/file-mimetype-filter';
 
 @ApiBearerAuth()
 @Controller('order')
@@ -64,18 +69,23 @@ export class OrderController {
 
   // @Roles('admin', 'manager')
   @ApiTags('order')
-  @UseGuards(JwtAuthGuard)
   @ApiConsumes('multipart/form-data')
-  @UseInterceptors(FilesInterceptor('files'))
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(
+    FilesInterceptor('files', 10, {
+      limits: {
+        fileSize: 39300,
+      },
+      fileFilter: fileMimetypeFilter('image/jpg', 'image/png', 'image/jpeg'),
+    }),
+  )
   @Post('')
   createOrder(
     @Body() body: CreateOrderDto,
     @Req() req: any,
     @UploadedFiles() files: Array<Express.Multer.File>,
   ) {
-    console.log(req.user);
-    console.log(files);
-    return this.orderService.createOrder(req.user.id, body);
+    return this.orderService.createOrder(req.user.id, body, files);
   }
 
   @ApiTags('exchange')
