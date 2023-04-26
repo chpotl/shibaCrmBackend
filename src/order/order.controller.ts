@@ -1,47 +1,35 @@
 import {
   Body,
   Controller,
-  Delete,
   Get,
-  HttpStatus,
   Param,
-  ParseFilePipeBuilder,
-  ParseIntPipe,
   Patch,
   Post,
-  Put,
   Req,
   UploadedFiles,
   UseGuards,
   UseInterceptors,
-  UsePipes,
 } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { CreateCategoryDto } from './dtos/create-category.dto';
 import { CreateSubcategoryDto } from './dtos/create-subcategory.dto';
 import { CreateOrderDto } from './dtos/create-order.dto';
 import { AddOrderInfoDto } from './dtos/add-orderinfo.dto';
-import { Roles } from '../auth/roles-auth.decorator';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import {
-  ApiBearerAuth,
-  ApiBody,
-  ApiConsumes,
-  ApiProperty,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { fileMimetypeFilter } from 'src/utils/file-mimetype-filter';
+import { excangeRates } from 'src/utils/exchange-rates';
 
 @ApiBearerAuth()
 @Controller('order')
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
-  @ApiTags('order')
-  @Get()
-  getAllOrders() {
-    return this.orderService.getAllOrders();
+  @ApiTags('exchange')
+  @Get('exchange')
+  getExchangeRates() {
+    return excangeRates();
   }
 
   @ApiTags('category')
@@ -67,6 +55,12 @@ export class OrderController {
     return this.orderService.createSubategory(categoryId, body);
   }
 
+  @ApiTags('order')
+  @Get()
+  getAllOrders() {
+    return this.orderService.getAllOrders();
+  }
+
   // @Roles('admin', 'manager')
   @ApiTags('order')
   @ApiConsumes('multipart/form-data')
@@ -86,12 +80,6 @@ export class OrderController {
     @UploadedFiles() files: Array<Express.Multer.File>,
   ) {
     return this.orderService.createOrder(req.user.id, body, files);
-  }
-
-  @ApiTags('exchange')
-  @Get('exchange')
-  getExchangeRates() {
-    return this.orderService.excangeRates();
   }
 
   @ApiTags('order')
