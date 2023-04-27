@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ParamsService } from './params.service';
 import { ParamsController } from './params.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Params, ParamsSchema } from './entities/params.schema';
+import { Params, ParamsSchema } from './schemas/params.schema';
 import { BankModule } from 'src/bank/bank.module';
 import { AuthModule } from 'src/auth/auth.module';
 

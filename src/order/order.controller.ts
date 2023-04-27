@@ -6,6 +6,7 @@ import {
   Patch,
   Post,
   Req,
+  UploadedFile,
   UploadedFiles,
   UseGuards,
   UseInterceptors,
@@ -17,7 +18,7 @@ import { CreateOrderDto } from './dtos/create-order.dto';
 import { AddOrderInfoDto } from './dtos/add-orderinfo.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
-import { FilesInterceptor } from '@nestjs/platform-express';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { fileMimetypeFilter } from 'src/utils/file-mimetype-filter';
 import { excangeRates } from 'src/utils/exchange-rates';
 
@@ -68,7 +69,7 @@ export class OrderController {
   @UseInterceptors(
     FilesInterceptor('files', 10, {
       limits: {
-        fileSize: 39300,
+        fileSize: 1 * 1024 * 1024,
       },
       fileFilter: fileMimetypeFilter('image/jpg', 'image/png', 'image/jpeg'),
     }),
@@ -83,9 +84,22 @@ export class OrderController {
   }
 
   @ApiTags('order')
+  @ApiConsumes('multipart/form-data')
   @Patch(':id')
-  addOrderInfo(@Body() body: AddOrderInfoDto, @Param('id') orderId: string) {
-    return this.orderService.addOrderInfo(orderId, body);
+  @UseInterceptors(
+    FileInterceptor('screenShot', {
+      limits: {
+        fileSize: 39300,
+      },
+      fileFilter: fileMimetypeFilter('image/jpg', 'image/png', 'image/jpeg'),
+    }),
+  )
+  addOrderInfo(
+    @Body() body: AddOrderInfoDto,
+    @Param('id') orderId: string,
+    @UploadedFile() screenShot: Express.Multer.File,
+  ) {
+    return this.orderService.addOrderInfo(orderId, screenShot, body);
   }
 
   @ApiTags('order')

@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { PromocodeService } from './promocode.service';
 import { PromocodeController } from './promocode.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Promocode, PromocodeSchema } from './schemas/promocode.entity';
+import { Promocode, PromocodeSchema } from './schemas/promocode.schema';
 import { AuthModule } from 'src/auth/auth.module';
 
 @Module({

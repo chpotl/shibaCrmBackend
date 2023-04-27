@@ -4,7 +4,7 @@ import { promoType } from '../enums/promocode.enum';
 
 @Schema()
 export class Promocode extends Document {
-  @Prop({ required: true })
+  @Prop({ required: true, unique: true })
   code: string;
 
   @Prop({ required: true, enum: promoType })

@@ -11,8 +11,9 @@ import { CreateCategoryDto } from './dtos/create-category.dto';
 import { CreateSubcategoryDto } from './dtos/create-subcategory.dto';
 import { CreateOrderDto } from './dtos/create-order.dto';
 import { AddOrderInfoDto } from './dtos/add-orderinfo.dto';
-import axios from 'axios';
-import { xml2json } from 'xml-js';
+import * as fs from 'fs';
+import { join } from 'path';
+import { AddOrderInfo } from './interfaces/add-order-info.interface';
 
 @Injectable()
 export class OrderService {
@@ -38,12 +39,39 @@ export class OrderService {
     });
   }
 
-  async addOrderInfo(orderId: string, addOrderInfoDto: AddOrderInfoDto) {
+  async addOrderInfo(
+    orderId: string,
+    screenShot: Express.Multer.File,
+    addOrderInfoDto: AddOrderInfoDto,
+  ) {
     const order = await this.orderModel.findById(orderId);
     if (!order) {
+      console.log(join(screenShot.destination, screenShot.filename));
+      fs.rm(join(screenShot.destination, screenShot.filename), (e) => {
+        console.log('removed ', e);
+      });
       return new NotFoundException('order not found');
     }
-    return await this.orderModel.findByIdAndUpdate(orderId, addOrderInfoDto, {
+    console.log(screenShot);
+
+    const updateObj: AddOrderInfo = {
+      paymentMethod: {
+        bank: addOrderInfoDto.bank,
+        screenShotUrl: { path: screenShot.path, mimetype: screenShot.mimetype },
+      },
+      contactInfo: {
+        name: addOrderInfoDto.contactName,
+        phone: addOrderInfoDto.contactPhone,
+        telegram: addOrderInfoDto.contactTelegram,
+      },
+      deliveryInfo: {
+        name: addOrderInfoDto.deliveryName,
+        phone: addOrderInfoDto.deliveryPhone,
+        delivery: addOrderInfoDto.deliveryType,
+      },
+      promocode: addOrderInfoDto.promocode,
+    };
+    return await this.orderModel.findByIdAndUpdate(orderId, updateObj, {
       new: true,
     });
   }
@@ -81,27 +109,5 @@ export class OrderService {
     return await this.categoryModel.findByIdAndUpdate(categoryId, {
       $push: { subcategory: newSubcategory._id },
     });
-  }
-
-  async excangeRates() {
-    const arr = ['USD', 'EUR', 'CNY'];
-    const xml = await (
-      await axios.get('http://www.cbr.ru/scripts/XML_daily.asp')
-    ).data;
-    const res = [];
-    const rate = JSON.parse(xml2json(xml)).elements[0].elements;
-    for (let el of rate) {
-      if (arr.includes(el.elements[1].elements[0].text)) {
-        res.push(parseFloat(el.elements[4].elements[0].text.replace(',', '.')));
-      }
-    }
-    res[0] += 5;
-    res[1] += 5;
-    res[2] += 1;
-    return {
-      USD: parseFloat(res[0].toFixed(2)),
-      EUR: parseFloat(res[1].toFixed(2)),
-      CNY: parseFloat(res[2].toFixed(2)),
-    };
   }
 }

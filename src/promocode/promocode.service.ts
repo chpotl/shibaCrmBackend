@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreatePromocodeDto } from './dto/create-promocode.dto';
 import { UpdatePromocodeDto } from './dto/update-promocode.dto';
 import { InjectModel } from '@nestjs/mongoose';
-import { Promocode } from './schemas/promocode.entity';
+import { Promocode } from './schemas/promocode.schema';
 import { Model } from 'mongoose';
 
 @Injectable()

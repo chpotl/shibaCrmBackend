@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateParamDto } from './dto/create-param.dto';
 import { UpdateParamsDto } from './dto/update-params.dto';
 import { InjectModel } from '@nestjs/mongoose';
-import { Params } from './entities/params.schema';
+import { Params } from './schemas/params.schema';
 import { Model } from 'mongoose';
 import { BankService } from 'src/bank/bank.service';
 

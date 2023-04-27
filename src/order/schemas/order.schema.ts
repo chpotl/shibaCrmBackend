@@ -26,12 +26,21 @@ export enum Currency {
 }
 
 @Schema()
+class Image extends Document {
+  @Prop({ required: true })
+  path: string;
+
+  @Prop({ required: true })
+  mimetype: string;
+}
+
+@Schema()
 class PaymentMethod extends Document {
   @Prop({ required: true, type: mongoose.Schema.Types.ObjectId, ref: 'Bank' })
   bank: Bank;
 
   @Prop({ required: true })
-  screenShotUrl: string;
+  screenShotUrl: Image;
 }
 const PaymentMethodSchema = SchemaFactory.createForClass(PaymentMethod);
 
@@ -64,15 +73,6 @@ class DeliveryInfo extends Document {
   delivery: DeliveryMethod;
 }
 const DeliveryInfoSchema = SchemaFactory.createForClass(DeliveryInfo);
-
-@Schema()
-class Image extends Document {
-  @Prop({ required: true })
-  path: string;
-
-  @Prop({ required: true })
-  mimetype: string;
-}
 
 @Schema()
 export class Order extends Document {
