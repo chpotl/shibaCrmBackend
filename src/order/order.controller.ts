@@ -19,8 +19,8 @@ import { AddOrderInfoDto } from './dtos/add-orderinfo.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
-import { fileMimetypeFilter } from 'src/utils/file-mimetype-filter';
-import { excangeRates } from 'src/utils/exchange-rates';
+import { fileMimetypeFilter } from '../utils/file-mimetype-filter';
+import { excangeRates } from '../utils/exchange-rates';
 
 @ApiBearerAuth()
 @Controller('order')
