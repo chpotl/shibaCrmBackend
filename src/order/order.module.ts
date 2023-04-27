@@ -21,7 +21,7 @@ import { MulterModule } from '@nestjs/platform-express';
       { name: Subcategory.name, schema: SubcategorySchema },
     ]),
     MulterModule.register({
-      dest: './tmp',
+      dest: '/tmp',
     }),
   ],
   controllers: [OrderController],
