@@ -4,13 +4,23 @@ const cookieParser = require('cookie-parser');
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import cors from 'cors';
+import helmet from 'helmet';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   //@ts-ignore
   app.use(cookieParser());
-  app.enableCors();
+  app.use(helmet());
+  app.enableCors({
+    preflightContinue: true,
+  });
+  app.use((req, res, next) => {
+    if (req.method === 'OPTIONS') {
+      res.status(200).end();
+      next();
+    }
+  });
   const configService = app.get(ConfigService);
   const port = configService.get('PORT');
 
