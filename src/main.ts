@@ -13,16 +13,7 @@ async function bootstrap() {
   app.use(cookieParser());
   app.use(helmet());
   app.enableCors({
-    preflightContinue: true,
-  });
-  app.use((req, res, next) => {
-    console.log('req method: ', req.method);
-    // console.log('req: ', req);
-    if (req.method === 'OPTIONS') {
-      console.log('345');
-      res.status(204).end();
-    }
-    return res.status(204);
+    origin: true,
   });
   const configService = app.get(ConfigService);
   const port = configService.get('PORT');
