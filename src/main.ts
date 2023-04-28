@@ -20,8 +20,8 @@ async function bootstrap() {
     if (req.method === 'OPTIONS') {
       console.log('345');
       res.status(204).end();
-      return next();
     }
+    return next();
   });
   const configService = app.get(ConfigService);
   const port = configService.get('PORT');
