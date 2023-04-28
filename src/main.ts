@@ -18,7 +18,7 @@ async function bootstrap() {
   app.use((req, res, next) => {
     if (req.method === 'OPTIONS') {
       res.status(204).end();
-      next();
+      return next();
     }
   });
   const configService = app.get(ConfigService);
