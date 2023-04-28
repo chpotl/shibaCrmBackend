@@ -14,12 +14,13 @@ async function bootstrap() {
     origin: 'http://localhost:3000',
     credentials: true,
   });
-  // app.use(
-  //   cors({
-  //     origin: true,
-  //     credentials: true,
-  //   }),
-  // );
+  app.use(
+    cors({
+      origin: true,
+      credentials: true,
+      secure: true,
+    }),
+  );
   const configService = app.get(ConfigService);
   const port = configService.get('PORT');
 
