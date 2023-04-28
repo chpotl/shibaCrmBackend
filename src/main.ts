@@ -13,14 +13,11 @@ async function bootstrap() {
   app.enableCors({
     origin: 'http://localhost:3000',
     credentials: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+    allowedHeaders: 'Content-Type, Accept',
   });
-  app.use(
-    cors({
-      origin: true,
-      credentials: true,
-      secure: true,
-    }),
-  );
   const configService = app.get(ConfigService);
   const port = configService.get('PORT');
 
