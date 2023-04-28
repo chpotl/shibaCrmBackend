@@ -22,7 +22,7 @@ async function bootstrap() {
       console.log('345');
       res.status(204).end();
     }
-    return next();
+    return res.status(204);
   });
   const configService = app.get(ConfigService);
   const port = configService.get('PORT');
