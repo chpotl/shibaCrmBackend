@@ -3,17 +3,23 @@ import { NestFactory } from '@nestjs/core';
 const cookieParser = require('cookie-parser');
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import cors from 'cors';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   //@ts-ignore
   app.use(cookieParser());
-  app.enableCors({
-    origin: 'http://localhost:3000',
-    credentials: true,
-    optionsSuccessStatus: 200,
-  });
+  // app.enableCors({
+  //   origin: 'http://localhost:3000',
+  //   credentials: true,
+  // });
+  app.use(
+    cors({
+      origin: true,
+      credentials: true,
+    }),
+  );
   const configService = app.get(ConfigService);
   const port = configService.get('PORT');
 
