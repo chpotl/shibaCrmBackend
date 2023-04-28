@@ -13,14 +13,14 @@ async function bootstrap() {
   app.use(cookieParser());
   app.use(helmet());
   app.enableCors({
-    preflightContinue: true,
+    origin: true,
   });
-  app.use((req, res, next) => {
-    if (req.method === 'OPTIONS') {
-      res.status(204).end();
-      return next();
-    }
-  });
+  // app.use((req, res, next) => {
+  //   if (req.method === 'OPTIONS') {
+  //     res.status(204).end();
+  //     return next();
+  //   }
+  // });
   const configService = app.get(ConfigService);
   const port = configService.get('PORT');
 
