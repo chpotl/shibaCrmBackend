@@ -10,16 +10,22 @@ async function bootstrap() {
 
   //@ts-ignore
   app.use(cookieParser());
-  // app.enableCors({
-  //   origin: 'http://localhost:3000',
-  //   credentials: true,
-  // });
   app.use(
     cors({
-      origin: true,
+      origin: 'http://localhost:3000',
       credentials: true,
     }),
   );
+  app.enableCors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+  });
+  // app.use(
+  //   cors({
+  //     origin: true,
+  //     credentials: true,
+  //   }),
+  // );
   const configService = app.get(ConfigService);
   const port = configService.get('PORT');
 
