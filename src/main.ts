@@ -11,9 +11,8 @@ async function bootstrap() {
 
   //@ts-ignore
   app.use(cookieParser());
-  app.use(helmet());
   app.enableCors({
-    origin: true,
+    origin: '*',
   });
   const configService = app.get(ConfigService);
   const port = configService.get('PORT');

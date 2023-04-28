@@ -7,7 +7,8 @@ import { ApiExcludeController } from '@nestjs/swagger';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Options('*')
-  @HttpCode(204)
-  corsHandler() {}
+  @Get()
+  helloWorld() {
+    return 'Hello';
+  }
 }
