@@ -16,7 +16,8 @@ async function bootstrap() {
     preflightContinue: true,
   });
   app.use((req, res, next) => {
-    console.log('123');
+    console.log('req method: ', req.method);
+    console.log('req: ', req);
     if (req.method === 'OPTIONS') {
       console.log('345');
       res.status(204).end();
