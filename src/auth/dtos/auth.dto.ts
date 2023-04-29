@@ -6,6 +6,9 @@ export class AuthDto {
   access_token: string;
 
   @Expose()
+  refresh_token: string;
+
+  @Expose()
   @Type(() => UserDto)
   user: UserDto;
 }

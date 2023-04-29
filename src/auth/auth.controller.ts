@@ -5,6 +5,7 @@ import { Serialize } from '../interceptors/serialize.interceptor';
 import { AuthDto } from './dtos/auth.dto';
 import { CreateUserDto } from '../user/dtos/create-user.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { RefreshDto } from './dtos/refresh.dto';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -20,8 +21,8 @@ export class AuthController {
     const { refresh_token, access_token, user } = await this.authService.signup(
       body,
     );
-    res.cookie('refresh_token', refresh_token);
-    return { access_token, user };
+    // res.cookie('refresh_token', refresh_token);
+    return { refresh_token, access_token, user };
   }
 
   @Serialize(AuthDto)
@@ -34,16 +35,16 @@ export class AuthController {
       body.email,
       body.password,
     );
-    res.cookie('refresh_token', refresh_token);
-    return { access_token, user };
+    // res.cookie('refresh_token', refresh_token);
+    return { refresh_token, access_token, user };
   }
 
   @Post('refresh')
-  async refreshToken(@Req() req: any, @Res({ passthrough: true }) res: any) {
+  async refreshToken(@Body() body: RefreshDto) {
     const { refresh_token, access_token } = await this.authService.refreshToken(
-      req.cookies?.refresh_token,
+      body.refresh_token,
     );
-    res.cookie('refresh_token', refresh_token);
-    return { access_token };
+    // res.cookie('refresh_token', refresh_token);
+    return { refresh_token, access_token };
   }
 }
