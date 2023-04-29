@@ -24,54 +24,21 @@ export class OrderService {
     private readonly subcategoryModel: Model<Subcategory>,
   ) {}
 
-  async createOrder(
-    managerId: string,
-    createOrderDto: CreateOrderDto,
-    files: Array<Express.Multer.File>,
-  ) {
-    const images = files.map(
-      (el) => new Object({ path: el.path, mimetype: el.mimetype }),
-    );
+  async createOrder(managerId: string, createOrderDto: CreateOrderDto) {
+    console.log(createOrderDto);
     return await this.orderModel.create({
       manager: managerId,
-      images,
       ...createOrderDto,
     });
   }
 
-  async addOrderInfo(
-    orderId: string,
-    screenShot: Express.Multer.File,
-    addOrderInfoDto: AddOrderInfoDto,
-  ) {
+  async addOrderInfo(orderId: string, addOrderInfoDto: AddOrderInfoDto) {
     const order = await this.orderModel.findById(orderId);
     if (!order) {
-      console.log(join(screenShot.destination, screenShot.filename));
-      fs.rm(join(screenShot.destination, screenShot.filename), (e) => {
-        console.log('removed ', e);
-      });
       return new NotFoundException('order not found');
     }
-    console.log(screenShot);
-
-    const updateObj: AddOrderInfo = {
-      paymentMethod: {
-        bank: addOrderInfoDto.bank,
-        screenShotUrl: { path: screenShot.path, mimetype: screenShot.mimetype },
-      },
-      contactInfo: {
-        name: addOrderInfoDto.contactName,
-        phone: addOrderInfoDto.contactPhone,
-        telegram: addOrderInfoDto.contactTelegram,
-      },
-      deliveryInfo: {
-        name: addOrderInfoDto.deliveryName,
-        phone: addOrderInfoDto.deliveryPhone,
-        delivery: addOrderInfoDto.deliveryType,
-      },
-      promocode: addOrderInfoDto.promocode,
-    };
-    return await this.orderModel.findByIdAndUpdate(orderId, updateObj, {
+    console.log(addOrderInfoDto);
+    return await this.orderModel.findByIdAndUpdate(orderId, addOrderInfoDto, {
       new: true,
     });
   }

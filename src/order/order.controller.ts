@@ -64,42 +64,16 @@ export class OrderController {
 
   // @Roles('admin', 'manager')
   @ApiTags('order')
-  @ApiConsumes('multipart/form-data')
   @UseGuards(JwtAuthGuard)
-  @UseInterceptors(
-    FilesInterceptor('files', 10, {
-      limits: {
-        fileSize: 1 * 1024 * 1024,
-      },
-      fileFilter: fileMimetypeFilter('image/jpg', 'image/png', 'image/jpeg'),
-    }),
-  )
   @Post('')
-  createOrder(
-    @Body() body: CreateOrderDto,
-    @Req() req: any,
-    @UploadedFiles() files: Array<Express.Multer.File>,
-  ) {
-    return this.orderService.createOrder(req.user.id, body, files);
+  createOrder(@Body() body: CreateOrderDto, @Req() req: any) {
+    return this.orderService.createOrder(req.user.id, body);
   }
 
   @ApiTags('order')
-  @ApiConsumes('multipart/form-data')
   @Patch(':id')
-  @UseInterceptors(
-    FileInterceptor('screenShot', {
-      limits: {
-        fileSize: 39300,
-      },
-      fileFilter: fileMimetypeFilter('image/jpg', 'image/png', 'image/jpeg'),
-    }),
-  )
-  addOrderInfo(
-    @Body() body: AddOrderInfoDto,
-    @Param('id') orderId: string,
-    @UploadedFile() screenShot: Express.Multer.File,
-  ) {
-    return this.orderService.addOrderInfo(orderId, screenShot, body);
+  addOrderInfo(@Body() body: AddOrderInfoDto, @Param('id') orderId: string) {
+    return this.orderService.addOrderInfo(orderId, body);
   }
 
   @ApiTags('order')

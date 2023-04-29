@@ -1,45 +1,67 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 import {
   IsMongoId,
   IsOptional,
   IsPhoneNumber,
   IsString,
+  ValidateNested,
 } from 'class-validator';
-
-export class AddOrderInfoDto {
+class ContactInfo {
   @ApiProperty()
   @IsString()
-  contactName: string;
+  name: string;
 
   @ApiProperty()
   @IsPhoneNumber()
-  contactPhone: string;
+  phone: string;
 
   @ApiProperty()
   @IsString()
-  contactTelegram: string;
+  telegram: string;
+}
 
+class DeliveryInfo {
   @ApiProperty()
   @IsString()
-  deliveryName: string;
+  name: string;
 
   @ApiProperty()
   @IsPhoneNumber()
-  deliveryPhone: string;
+  phone: string;
+
+  @ApiProperty()
+  @IsString()
+  address: string;
 
   @ApiProperty()
   @IsMongoId()
-  deliveryType: string;
+  delivery: string;
+}
 
+class PaymentMethod {
   @ApiProperty()
   @IsMongoId()
   bank: string;
 
-  @ApiProperty({ type: 'string', format: 'binary', required: true })
-  screenShot: string;
-
   @ApiProperty()
-  @IsOptional()
-  @IsMongoId()
-  promocode?: string; //payment method chosen by user
+  @IsString()
+  screenShotUrl: string;
+}
+
+export class AddOrderInfoDto {
+  @ApiProperty({ type: () => ContactInfo })
+  @ValidateNested()
+  @Type(() => ContactInfo)
+  contactInfo: ContactInfo; //payment method chosen by user
+
+  @ApiProperty({ type: () => DeliveryInfo })
+  @ValidateNested()
+  @Type(() => DeliveryInfo)
+  deliveryInfo: DeliveryInfo;
+
+  @ApiProperty({ type: () => PaymentMethod })
+  @ValidateNested()
+  @Type(() => PaymentMethod)
+  paymentMethod: PaymentMethod; //payment method chosen by user
 }

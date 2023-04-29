@@ -11,6 +11,7 @@ import { BankModule } from './bank/bank.module';
 import { DeliveryModule } from './delivery/delivery.module';
 import { PromocodeModule } from './promocode/promocode.module';
 import { ParamsModule } from './params/params.module';
+import { FilesModule } from './files/files.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { ParamsModule } from './params/params.module';
     BankModule,
     PromocodeModule,
     ParamsModule,
+    FilesModule,
   ],
   controllers: [AppController],
   providers: [

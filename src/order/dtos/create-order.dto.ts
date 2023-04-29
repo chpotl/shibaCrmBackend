@@ -38,23 +38,21 @@ export class CreateOrderDto {
   subcategory: string;
 
   @ApiProperty({
-    type: 'string',
-    isArray: true,
-    format: 'binary',
     required: true,
   })
-  files: string[];
+  @IsString({ each: true })
+  images: string[];
 
   @ApiProperty({ description: 'price for 1 usd/eur/cny' })
-  @IsNumberString()
+  @IsNumber()
   unitPrice: number;
 
   @ApiProperty({ description: 'product price in usd/eur/cny' })
-  @IsNumberString()
+  @IsNumber()
   productPrice: number;
 
   @ApiProperty({ description: 'product price in rubbles' })
-  @IsNumberString()
+  @IsNumber()
   rubblePrice: number;
 
   @ApiProperty({ description: 'currency' })
@@ -62,23 +60,23 @@ export class CreateOrderDto {
   currency: string;
 
   @ApiProperty({ description: 'delivery price form poizon/stockx to china' })
-  @IsNumberString()
+  @IsNumber()
   marketplaceDelivery: number;
 
   @ApiProperty({ description: 'delivery price form china to russia' })
-  @IsNumberString()
+  @IsNumber()
   internationalDelivery: number;
 
   @ApiProperty({ description: 'insurance' })
-  @IsNumberString()
+  @IsNumber()
   insurance: number;
 
   @ApiProperty({ description: 'shiba comission' })
-  @IsNumberString()
+  @IsNumber()
   comission: number; //shiba comission
 
   @ApiProperty({ description: 'total price in rubbles' })
-  @IsNumberString()
+  @IsNumber()
   totalPrice: number; //total price in rubbles
 
   @ApiProperty({ description: 'order comment' })
