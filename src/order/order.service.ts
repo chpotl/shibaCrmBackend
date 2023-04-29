@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Order } from './schemas/order.schema';
+import { Order, OrderState } from './schemas/order.schema';
 import { Model } from 'mongoose';
 import { Category, Subcategory } from './schemas/category.schema';
 import { CreateCategoryDto } from './dtos/create-category.dto';
@@ -41,6 +41,23 @@ export class OrderService {
     return await this.orderModel.findByIdAndUpdate(orderId, addOrderInfoDto, {
       new: true,
     });
+  }
+
+  async updateOrderStatus(orderId: string, status: number) {
+    const order = await this.orderModel.findById(orderId);
+    if (!order) {
+      return new NotFoundException('order not found');
+    }
+    if (!Object.values(OrderState).includes(status)) {
+      return new BadRequestException('state dosent exist');
+    }
+    return await this.orderModel.findByIdAndUpdate(
+      orderId,
+      {
+        $set: { orderStatus: status },
+      },
+      { new: true },
+    );
   }
 
   async getAllOrders(page: number, limit: number, orderStatus: number) {

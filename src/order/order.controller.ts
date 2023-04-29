@@ -5,6 +5,7 @@ import {
   Param,
   Patch,
   Post,
+  Put,
   Query,
   Req,
   UploadedFile,
@@ -22,6 +23,7 @@ import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { fileMimetypeFilter } from '../utils/file-mimetype-filter';
 import { excangeRates } from '../utils/exchange-rates';
+import { OrderState } from './schemas/order.schema';
 
 @ApiBearerAuth()
 @Controller('order')
@@ -77,6 +79,15 @@ export class OrderController {
   @Post('')
   createOrder(@Body() body: CreateOrderDto, @Req() req: any) {
     return this.orderService.createOrder(req.user.id, body);
+  }
+
+  @ApiTags('order')
+  @Put(':id')
+  updateOrderStatus(
+    @Param('id') orderId: string,
+    @Query('status') status: string,
+  ) {
+    return this.orderService.updateOrderStatus(orderId, +status);
   }
 
   @ApiTags('order')
