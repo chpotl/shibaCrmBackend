@@ -5,6 +5,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   Req,
   UploadedFile,
   UploadedFiles,
@@ -58,8 +59,16 @@ export class OrderController {
 
   @ApiTags('order')
   @Get()
-  getAllOrders() {
-    return this.orderService.getAllOrders();
+  getAllOrders(
+    @Query('page') page: string,
+    @Query('limit') limit: string,
+    @Query('orderStatus') orderStatus: string,
+  ) {
+    return this.orderService.getAllOrders(
+      +page || 1,
+      +limit || 10,
+      +orderStatus || 0,
+    );
   }
 
   // @Roles('admin', 'manager')

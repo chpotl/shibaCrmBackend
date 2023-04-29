@@ -3,7 +3,7 @@ import mongoose, { Document } from 'mongoose';
 
 @Schema()
 export class Category extends Document {
-  @Prop({ required: true })
+  @Prop({ required: true, unique: true })
   name: string;
 
   @Prop({
@@ -15,7 +15,7 @@ export class Category extends Document {
 
 @Schema()
 export class Subcategory extends Document {
-  @Prop({ required: true })
+  @Prop({ required: true, unique: true })
   name: string;
 }
 

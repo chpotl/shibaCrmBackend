@@ -43,8 +43,15 @@ export class OrderService {
     });
   }
 
-  async getAllOrders() {
-    return await this.orderModel.find();
+  async getAllOrders(page: number, limit: number, orderStatus: number) {
+    const match = {
+      orderStatus,
+    };
+
+    return await this.orderModel
+      .find(match)
+      .limit(limit)
+      .skip((page - 1) * limit);
   }
 
   async getOrderById(orderId: string) {
