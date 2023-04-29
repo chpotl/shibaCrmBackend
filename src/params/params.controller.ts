@@ -20,11 +20,13 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 export class ParamsController {
   constructor(private readonly paramsService: ParamsService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() createParamDto: CreateParamDto) {
     return this.paramsService.create(createParamDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
     return this.paramsService.findAll();
