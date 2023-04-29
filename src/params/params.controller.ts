@@ -33,8 +33,8 @@ export class ParamsController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateParamsDto: UpdateParamsDto) {
+  @Patch()
+  update(@Body() updateParamsDto: UpdateParamsDto) {
     return this.paramsService.update(updateParamsDto);
   }
 }
