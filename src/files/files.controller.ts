@@ -11,8 +11,8 @@ import {
 import { FilesService } from './files.service';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { fileMimetypeFilter } from 'src/utils/file-mimetype-filter';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { fileMimetypeFilter } from '../utils/file-mimetype-filter';
 
 @ApiBearerAuth()
 @ApiTags('files')
