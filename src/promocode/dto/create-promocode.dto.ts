@@ -1,5 +1,7 @@
 import {
   IsCreditCard,
+  IsDate,
+  IsDateString,
   IsEnum,
   IsMongoId,
   IsNumber,
@@ -16,6 +18,11 @@ export class CreatePromocodeDto {
   @IsString()
   @MinLength(4)
   code: string;
+
+  @ApiProperty()
+  @IsDateString()
+  @IsOptional()
+  expireDate: Date;
 
   @ApiProperty()
   @IsEnum(promoType)

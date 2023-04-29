@@ -1,6 +1,14 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { CreatePromocodeDto } from './create-promocode.dto';
-import { IsEnum, IsNumber, IsString, MinLength } from 'class-validator';
+import {
+  IsDate,
+  IsDateString,
+  IsEnum,
+  IsNumber,
+  IsOptional,
+  IsString,
+  MinLength,
+} from 'class-validator';
 import { promoType } from '../enums/promocode.enum';
 
 export class UpdatePromocodeDto {
@@ -8,6 +16,11 @@ export class UpdatePromocodeDto {
   @IsString()
   @MinLength(4)
   code: string;
+
+  @ApiProperty()
+  @IsDateString()
+  @IsOptional()
+  expireDate: Date;
 
   @ApiProperty()
   @IsEnum(promoType)
