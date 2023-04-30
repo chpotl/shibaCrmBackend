@@ -3,6 +3,9 @@ import { Document } from 'mongoose';
 
 @Schema()
 export class Bank extends Document {
+  @Prop({ required: true, unique: true })
+  bank: string;
+
   @Prop({ required: true })
   name: string;
 

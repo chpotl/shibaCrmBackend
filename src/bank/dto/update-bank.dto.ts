@@ -11,6 +11,11 @@ export class UpdateBankDto {
   @ApiProperty()
   @IsOptional()
   @IsString()
+  bank: string;
+
+  @ApiProperty()
+  @IsOptional()
+  @IsString()
   name: string;
 
   @ApiProperty()
