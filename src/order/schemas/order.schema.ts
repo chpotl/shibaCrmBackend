@@ -129,7 +129,7 @@ export class Order extends Document {
   @Prop({ required: true })
   totalPrice: number; //total price in rubbles
 
-  @Prop({ required: true, default: '' })
+  @Prop({ default: '' })
   comment: string; //order comment
 
   @Prop({

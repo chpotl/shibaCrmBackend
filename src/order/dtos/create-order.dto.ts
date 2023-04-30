@@ -81,8 +81,8 @@ export class CreateOrderDto {
 
   @ApiProperty({ description: 'order comment' })
   @IsString()
-  @IsOptional()
   @MinLength(10)
+  @IsOptional()
   comment: string; //order comment
 
   // @Prop({ required: true, default: OrderState.waitingPayment })
