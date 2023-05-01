@@ -19,7 +19,7 @@ import { CreateSubcategoryDto } from './dtos/create-subcategory.dto';
 import { CreateOrderDto } from './dtos/create-order.dto';
 import { AddOrderInfoDto } from './dtos/add-orderinfo.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiConsumes, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { fileMimetypeFilter } from '../utils/file-mimetype-filter';
 import { excangeRates } from '../utils/exchange-rates';
@@ -59,6 +59,21 @@ export class OrderController {
     return this.orderService.createSubategory(categoryId, body);
   }
 
+  @ApiQuery({
+    name: 'page',
+    type: Number,
+    required: false,
+  })
+  @ApiQuery({
+    name: 'limit',
+    type: Number,
+    required: false,
+  })
+  @ApiQuery({
+    name: 'orderStatus',
+    type: Number,
+    required: false,
+  })
   @ApiTags('order')
   @Get()
   getAllOrders(
@@ -66,11 +81,18 @@ export class OrderController {
     @Query('limit') limit: string,
     @Query('orderStatus') orderStatus: string,
   ) {
-    return this.orderService.getAllOrders(
-      +page || 1,
-      +limit || 10,
-      +orderStatus || 0,
-    );
+    console.log(page, limit, orderStatus);
+    if (page && limit && orderStatus) {
+      console.log(1);
+      return this.orderService.getAllOrdersWithQuery(
+        +page || 1,
+        +limit || 10,
+        +orderStatus || 0,
+      );
+    } else {
+      console.log(2);
+      return this.orderService.getAllOrders();
+    }
   }
 
   // @Roles('admin', 'manager')

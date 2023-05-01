@@ -60,7 +60,15 @@ export class OrderService {
     );
   }
 
-  async getAllOrders(page: number, limit: number, orderStatus: number) {
+  async getAllOrders() {
+    return await this.orderModel.find();
+  }
+
+  async getAllOrdersWithQuery(
+    page: number,
+    limit: number,
+    orderStatus: number,
+  ) {
     const match = {
       orderStatus,
     };
