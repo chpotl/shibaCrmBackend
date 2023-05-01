@@ -39,7 +39,12 @@ export class FilesController {
   @Post()
   @UseInterceptors(
     FilesInterceptor('files', 10, {
-      fileFilter: fileMimetypeFilter('image/jpg', 'image/png', 'image/jpeg'),
+      fileFilter: fileMimetypeFilter(
+        'image/jpg',
+        'image/png',
+        'image/jpeg',
+        'image/webp',
+      ),
     }),
   )
   uploadFiles(@UploadedFiles() files: Array<Express.Multer.File>) {
