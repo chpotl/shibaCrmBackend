@@ -37,10 +37,16 @@ export class OrderService {
     if (!order) {
       return new NotFoundException('order not found');
     }
-    console.log(addOrderInfoDto);
-    return await this.orderModel.findByIdAndUpdate(orderId, addOrderInfoDto, {
-      new: true,
-    });
+    return await this.orderModel.findByIdAndUpdate(
+      orderId,
+      {
+        ...addOrderInfoDto,
+        $set: { orderStatus: OrderState.paymentVerification },
+      },
+      {
+        new: true,
+      },
+    );
   }
 
   async updateOrderStatus(orderId: string, status: number) {

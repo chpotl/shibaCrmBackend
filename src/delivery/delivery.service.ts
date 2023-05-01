@@ -20,14 +20,14 @@ export class DeliveryService {
     return await this.deliveryMethodModel.find();
   }
 
-  async update(id: number, updateDeliveryDto: UpdateDeliveryDto) {
+  async update(id: string, updateDeliveryDto: UpdateDeliveryDto) {
     return await this.deliveryMethodModel.findByIdAndUpdate(
       id,
       updateDeliveryDto,
     );
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     return await this.deliveryMethodModel.findByIdAndDelete(id);
   }
 }
