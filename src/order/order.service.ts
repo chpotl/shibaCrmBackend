@@ -67,11 +67,12 @@ export class OrderService {
   async getAllOrdersWithQuery(
     page: number,
     limit: number,
-    orderStatus: number,
+    orderStatus: number | undefined,
   ) {
-    const match = {
-      orderStatus,
-    };
+    let match = {};
+    if (orderStatus) {
+      match = { orderStatus };
+    }
 
     return await this.orderModel
       .find(match)

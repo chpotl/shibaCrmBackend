@@ -62,12 +62,12 @@ export class OrderController {
   @ApiQuery({
     name: 'page',
     type: Number,
-    required: false,
+    required: true,
   })
   @ApiQuery({
     name: 'limit',
     type: Number,
-    required: false,
+    required: true,
   })
   @ApiQuery({
     name: 'orderStatus',
@@ -81,18 +81,11 @@ export class OrderController {
     @Query('limit') limit: string,
     @Query('orderStatus') orderStatus: string,
   ) {
-    console.log(page, limit, orderStatus);
-    if (page && limit && orderStatus) {
-      console.log(1);
-      return this.orderService.getAllOrdersWithQuery(
-        +page || 1,
-        +limit || 10,
-        +orderStatus || 0,
-      );
-    } else {
-      console.log(2);
-      return this.orderService.getAllOrders();
-    }
+    return this.orderService.getAllOrdersWithQuery(
+      +page || 1,
+      +limit || 10,
+      +orderStatus || undefined,
+    );
   }
 
   // @Roles('admin', 'manager')
