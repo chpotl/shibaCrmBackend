@@ -83,11 +83,14 @@ export class OrderService {
     return await this.orderModel
       .find(match)
       .limit(limit)
-      .skip((page - 1) * limit);
+      .skip((page - 1) * limit)
+      .populate('deliveryInfo.delivery');
   }
 
   async getOrderById(orderId: string) {
-    return await this.orderModel.findById(orderId);
+    return await this.orderModel
+      .findById(orderId)
+      .populate('deliveryInfo.delivery');
   }
 
   async getAllCategories() {
