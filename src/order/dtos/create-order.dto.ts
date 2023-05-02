@@ -81,7 +81,6 @@ export class CreateOrderDto {
 
   @ApiProperty({ description: 'order comment' })
   @IsString()
-  @MinLength(10)
   @IsOptional()
   comment: string; //order comment
 
