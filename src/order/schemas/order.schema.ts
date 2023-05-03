@@ -68,7 +68,7 @@ class DeliveryInfo extends Document {
 }
 const DeliveryInfoSchema = SchemaFactory.createForClass(DeliveryInfo);
 
-@Schema()
+@Schema({ timestamps: true })
 export class Order extends Document {
   @Prop({ required: true })
   url: string; //link to poizon/stockx/farfetch
@@ -150,6 +150,12 @@ export class Order extends Document {
 
   @Prop({ required: true, type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   manager: User;
+
+  @Prop()
+  createdAt?: Date;
+
+  @Prop()
+  updatedAt?: Date;
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order);

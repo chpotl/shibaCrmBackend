@@ -62,29 +62,36 @@ export class OrderController {
   @ApiQuery({
     name: 'page',
     type: Number,
-    required: true,
+    required: false,
   })
   @ApiQuery({
     name: 'limit',
     type: Number,
-    required: true,
+    required: false,
   })
   @ApiQuery({
     name: 'orderStatus',
     type: Number,
     required: false,
   })
+  @ApiQuery({
+    name: 'search',
+    type: String,
+    required: false,
+  })
   @ApiTags('order')
   @Get()
   getAllOrders(
-    @Query('page') page: string,
-    @Query('limit') limit: string,
-    @Query('orderStatus') orderStatus: string,
+    @Query('page') page: string | undefined,
+    @Query('limit') limit: string | undefined,
+    @Query('orderStatus') orderStatus: string | undefined,
+    @Query('search') search: string | undefined,
   ) {
     return this.orderService.getAllOrdersWithQuery(
-      +page || 1,
-      +limit || 10,
-      +orderStatus || undefined,
+      page,
+      limit,
+      orderStatus,
+      search,
     );
   }
 

@@ -71,19 +71,38 @@ export class OrderService {
   }
 
   async getAllOrdersWithQuery(
-    page: number,
-    limit: number,
-    orderStatus: number | undefined,
+    page: string | undefined,
+    limit: string | undefined,
+    orderStatus: string | undefined,
+    search: string | undefined,
   ) {
-    let match = {};
-    if (orderStatus) {
-      match = { orderStatus };
+    let options: any = {};
+    if (search) {
+      const regEx = new RegExp(search, 'i');
+      options = {
+        $or: [
+          { url: regEx },
+          { brand: regEx },
+          { model: regEx },
+          { size: regEx },
+          { 'contactInfo.name': regEx },
+          { 'contactInfo.phone': regEx },
+          { 'contactInfo.telegram': regEx },
+          { 'deliveryInfo.name': regEx },
+          { 'deliveryInfo.phone': regEx },
+          { 'deliveryInfo.address': regEx },
+        ],
+      };
     }
-
+    if (orderStatus) {
+      options.orderStatus = orderStatus;
+    }
+    const _page: number = parseInt(page) || 1;
+    const _limit: number = parseInt(limit) || 10;
     return await this.orderModel
-      .find(match)
-      .limit(limit)
-      .skip((page - 1) * limit)
+      .find(options)
+      .limit(_limit)
+      .skip((_page - 1) * _limit)
       .populate('deliveryInfo.delivery');
   }
 
