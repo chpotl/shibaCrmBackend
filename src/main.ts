@@ -12,9 +12,20 @@ async function bootstrap() {
   //@ts-ignore
   app.use(cookieParser());
   const configService = app.get(ConfigService);
-  const origin = configService.get('ORIGIN');
+  const whitelist = [
+    'https://shiba-shipping.netlify.app',
+    'http://localhost:3000',
+  ];
   app.enableCors({
-    origin,
+    origin: function (origin, callback) {
+      if (whitelist.indexOf(origin) !== -1) {
+        console.log('allowed cors for:', origin);
+        callback(null, true);
+      } else {
+        console.log('blocked cors for:', origin);
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true,
   });
   const port = configService.get('PORT');
