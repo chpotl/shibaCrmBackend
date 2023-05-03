@@ -17,6 +17,7 @@ async function bootstrap() {
   const origin = configService.get('ORIGIN');
   const whitelist = [
     'https://shiba-shipping.netlify.app',
+    'https://shiba-crm-backend.vercel.app',
     'http://localhost:3000',
   ];
   app.enableCors({
