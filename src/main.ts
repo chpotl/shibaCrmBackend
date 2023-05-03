@@ -11,11 +11,12 @@ async function bootstrap() {
 
   //@ts-ignore
   app.use(cookieParser());
+  const configService = app.get(ConfigService);
+  const origin = configService.get('ORIGIN');
   app.enableCors({
-    origin: 'http://localhost:3000',
+    origin,
     credentials: true,
   });
-  const configService = app.get(ConfigService);
   const port = configService.get('PORT');
 
   const config = new DocumentBuilder()
