@@ -5,9 +5,11 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import cors from 'cors';
 import helmet from 'helmet';
+import { CustomExceptionsFilter } from './utils/global-error-handler';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  // app.useGlobalFilters(new CustomExceptionsFilter());
 
   //@ts-ignore
   app.use(cookieParser());
@@ -19,10 +21,12 @@ async function bootstrap() {
   ];
   app.enableCors({
     origin: function (origin, callback) {
-      console.log(origin);
+      console.log('cors orgin', origin);
       if (!origin || whitelist.indexOf(origin) !== -1) {
+        console.log('cors success', origin);
         callback(null, true);
       } else {
+        console.log('cors failure');
         callback(new Error('Not allowed by CORS'));
       }
     },
