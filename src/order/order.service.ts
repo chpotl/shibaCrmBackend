@@ -103,13 +103,13 @@ export class OrderService {
       .find(options)
       .limit(_limit)
       .skip((_page - 1) * _limit)
-      .populate('deliveryInfo.delivery');
+      .populate('deliveryInfo.delivery category subcategory');
   }
 
   async getOrderById(orderId: string) {
     return await this.orderModel
       .findById(orderId)
-      .populate('deliveryInfo.delivery');
+      .populate('deliveryInfo.delivery category subcategory');
   }
 
   async getAllCategories() {
