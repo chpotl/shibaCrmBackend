@@ -6,17 +6,17 @@ import { Bank } from 'src/bank/schemas/bank.schema';
 import { DeliveryMethod } from 'src/delivery/schemas/delivery.schema';
 
 export enum OrderState {
-  waitingPayment,
-  paymentVerification,
-  paid,
-  purchaseProcess,
-  purchased,
-  deliveryToChina,
-  inChina,
-  deliveryToRussia,
-  inRussia,
-  finalDelivery,
-  finished,
+  waitingPayment = 'Ожидание оплаты',
+  paymentVerification = 'Подтверждение оплаты',
+  paid = 'Оплачен',
+  purchaseProcess = 'На закупке',
+  purchased = 'Закуплен',
+  deliveryToChina = 'Доставляется на склад в Китае',
+  inChina = 'На складе в Китае',
+  deliveryToRussia = 'Доставляется на склад РФ',
+  inRussia = 'На складе РФ',
+  finalDelivery = 'Доставляется клиенту',
+  finished = 'Завершен',
 }
 
 export enum Currency {
@@ -137,7 +137,7 @@ export class Order extends Document {
     default: OrderState.waitingPayment,
     enum: OrderState,
   })
-  orderStatus: number; //order status
+  orderStatus: string; //order status
 
   @Prop({ type: PaymentMethodSchema })
   paymentMethod: PaymentMethod; //payment method chosen by user

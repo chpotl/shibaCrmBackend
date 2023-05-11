@@ -71,7 +71,7 @@ export class OrderController {
   })
   @ApiQuery({
     name: 'orderStatus',
-    type: Number,
+    type: String,
     required: false,
   })
   @ApiQuery({
@@ -107,9 +107,9 @@ export class OrderController {
   @Put(':id')
   updateOrderStatus(
     @Param('id') orderId: string,
-    @Query('status') status: string,
+    @Query('status') status: OrderState,
   ) {
-    return this.orderService.updateOrderStatus(orderId, +status);
+    return this.orderService.updateOrderStatus(orderId, status);
   }
 
   @ApiTags('order')
