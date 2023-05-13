@@ -31,18 +31,18 @@ export class PromocodeService {
     return promocode;
   }
 
-  async update(code: string, updatePromocodeDto: UpdatePromocodeDto) {
+  async update(id: string, updatePromocodeDto: UpdatePromocodeDto) {
     return await this.promocodeModel.findOneAndUpdate(
-      { code },
+      { id },
       updatePromocodeDto,
     );
   }
 
-  async remove(code: string) {
-    const promocode = await this.promocodeModel.findOne({ code });
+  async remove(id: string) {
+    const promocode = await this.promocodeModel.findOne({ id });
     if (!promocode) {
       return new NotFoundException('no such promocode');
     }
-    return await this.promocodeModel.findOneAndRemove({ code });
+    return await this.promocodeModel.findOneAndRemove({ id });
   }
 }

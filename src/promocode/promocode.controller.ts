@@ -39,14 +39,14 @@ export class PromocodeController {
 
   @Patch(':code')
   update(
-    @Param('code') code: string,
+    @Param('id') id: string,
     @Body() updatePromocodeDto: UpdatePromocodeDto,
   ) {
-    return this.promocodeService.update(code, updatePromocodeDto);
+    return this.promocodeService.update(id, updatePromocodeDto);
   }
 
   @Delete(':code')
-  remove(@Param('code') code: string) {
-    return this.promocodeService.remove(code);
+  remove(@Param('id') id: string) {
+    return this.promocodeService.remove(id);
   }
 }
