@@ -31,6 +31,7 @@ export class DeliveryController {
     return this.deliveryService.findAll();
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   update(
     @Param('id') id: string,
@@ -39,6 +40,7 @@ export class DeliveryController {
     return this.deliveryService.update(id, updateDeliveryDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.deliveryService.remove(id);

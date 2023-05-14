@@ -156,6 +156,20 @@ export class Order extends Document {
 
   @Prop()
   updatedAt?: Date;
+
+  total: number;
 }
 
-export const OrderSchema = SchemaFactory.createForClass(Order);
+const OrderSchema = SchemaFactory.createForClass(Order);
+
+OrderSchema.virtual('total').get(function (this: Order & Document) {
+  return (
+    this.rubblePrice +
+    this.marketplaceDelivery +
+    this.internationalDelivery +
+    this.insurance +
+    this.comission
+  );
+});
+
+export { OrderSchema };

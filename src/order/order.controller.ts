@@ -59,6 +59,7 @@ export class OrderController {
     return this.orderService.createSubategory(categoryId, body);
   }
 
+  @UseGuards(JwtAuthGuard)
   @ApiQuery({
     name: 'page',
     type: Number,
@@ -103,6 +104,7 @@ export class OrderController {
     return this.orderService.createOrder(req.user.id, body);
   }
 
+  @UseGuards(JwtAuthGuard)
   @ApiTags('order')
   @Put(':id')
   updateOrderStatus(

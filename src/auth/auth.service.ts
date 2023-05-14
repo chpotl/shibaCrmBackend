@@ -9,6 +9,7 @@ import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from '../user/dtos/create-user.dto';
 import { User } from '../user/schemas/user.schema';
 import { UserService } from '../user/user.service';
+import { error } from 'console';
 
 @Injectable()
 export class AuthService {
@@ -43,22 +44,27 @@ export class AuthService {
   }
 
   async refreshToken(refresh_token: string) {
-    if (!refresh_token) {
-      throw new UnauthorizedException('you dont have refresh token');
+    try {
+      if (!refresh_token) {
+        throw new UnauthorizedException('you dont have refresh token');
+      }
+      const payload = await this.jwtService.verify(refresh_token);
+      if (!payload) {
+        throw new UnauthorizedException('auth error');
+      }
+      return {
+        refresh_token: this.jwtService.sign(
+          { id: payload.id, role: payload.role },
+          { expiresIn: '1d' },
+        ),
+        access_token: this.jwtService.sign(
+          { id: payload.id, role: payload.role },
+          { expiresIn: '15m' },
+        ),
+      };
+    } catch (e) {
+      error(e);
+      throw new BadRequestException(e.name);
     }
-    const payload = this.jwtService.verify(refresh_token);
-    if (!payload) {
-      throw new UnauthorizedException('auth error');
-    }
-    return {
-      refresh_token: this.jwtService.sign(
-        { id: payload.id, role: payload.role },
-        { expiresIn: '1d' },
-      ),
-      access_token: this.jwtService.sign(
-        { id: payload.id, role: payload.role },
-        { expiresIn: '15m' },
-      ),
-    };
   }
 }

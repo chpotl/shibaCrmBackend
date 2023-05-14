@@ -37,6 +37,7 @@ export class PromocodeController {
     return this.promocodeService.findOne(code);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch(':code')
   update(
     @Param('id') id: string,
@@ -45,6 +46,7 @@ export class PromocodeController {
     return this.promocodeService.update(id, updatePromocodeDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':code')
   remove(@Param('id') id: string) {
     return this.promocodeService.remove(id);

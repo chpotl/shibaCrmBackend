@@ -37,6 +37,7 @@ export class BankController {
     return this.bankService.update(id, updateBankDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.bankService.remove(id);

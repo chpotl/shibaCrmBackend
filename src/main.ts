@@ -3,12 +3,10 @@ import { NestFactory } from '@nestjs/core';
 const cookieParser = require('cookie-parser');
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import cors from 'cors';
-import helmet from 'helmet';
-import { CustomExceptionsFilter } from './utils/global-error-handler';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
   // app.useGlobalFilters(new CustomExceptionsFilter());
 
   //@ts-ignore

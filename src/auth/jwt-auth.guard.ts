@@ -2,6 +2,7 @@ import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { ROLES_KEY } from './roles-auth.decorator';
+import { error, log, warn } from 'console';
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
@@ -18,22 +19,27 @@ export class JwtAuthGuard implements CanActivate {
       );
       const request = context.switchToHttp().getRequest();
       if (!request.headers.authorization) {
+        warn('request auth header is empty');
         return false;
       }
       const [bearer, token] = request.headers.authorization.split(' ');
       if (bearer !== 'Bearer' || !token) {
+        warn(`bearer or toke is empty\n bearer:${bearer} token: ${token}`);
         return false;
       }
       const user = this.jwtService.verify(token);
       if (!user) {
+        warn(`user not found`);
         return false;
       }
       request.user = user;
       if (!requiredRoles) {
+        log(`required roles are empty`);
         return true;
       }
       return requiredRoles.includes(user.role);
     } catch (e) {
+      error(e);
       return false;
     }
   }
