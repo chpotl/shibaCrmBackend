@@ -68,7 +68,12 @@ class DeliveryInfo extends Document {
 }
 const DeliveryInfoSchema = SchemaFactory.createForClass(DeliveryInfo);
 
-@Schema({ timestamps: true })
+@Schema({
+  timestamps: true,
+  toJSON: {
+    virtuals: true,
+  },
+})
 export class Order extends Document {
   @Prop({ required: true })
   url: string; //link to poizon/stockx/farfetch
@@ -126,8 +131,8 @@ export class Order extends Document {
   @Prop({ required: true })
   comission: number; //shiba comission
 
-  @Prop({ required: true })
-  totalPrice: number; //total price in rubbles
+  // @Prop({ required: true })
+  // totalPrice: number; //total price in rubbles
 
   @Prop({ default: '' })
   comment: string; //order comment
@@ -157,12 +162,18 @@ export class Order extends Document {
   @Prop()
   updatedAt?: Date;
 
-  total: number;
+  @Prop({ default: false })
+  showLink: boolean;
+
+  @Prop({ default: false })
+  showDetails: boolean;
+
+  totalPrice: number;
 }
 
 const OrderSchema = SchemaFactory.createForClass(Order);
 
-OrderSchema.virtual('total').get(function (this: Order & Document) {
+OrderSchema.virtual('totalPrice').get(function (this: Order & Document) {
   return (
     this.rubblePrice +
     this.marketplaceDelivery +

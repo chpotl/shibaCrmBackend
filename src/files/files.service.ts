@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import EasyYandexS3 from 'easy-yandex-s3';
 
 @Injectable()
@@ -13,14 +13,18 @@ export class FilesService {
   });
 
   async s3filesUpload(files: Array<Express.Multer.File>) {
-    const payload: {
-      buffer: Buffer;
-    }[] = files.map((file): { buffer: Buffer } => {
-      return {
-        buffer: file.buffer,
-      };
-    });
-    return await this.s3.Upload(payload, '/images/');
+    try {
+      const payload: {
+        buffer: Buffer;
+      }[] = files.map((file): { buffer: Buffer } => {
+        return {
+          buffer: file.buffer,
+        };
+      });
+      return await this.s3.Upload(payload, '/images/');
+    } catch (e) {
+      throw new InternalServerErrorException(e.name);
+    }
   }
 
   async s3filesDelete(url: string) {

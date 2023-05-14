@@ -1,4 +1,5 @@
 import {
+  IsBoolean,
   IsEnum,
   IsMongoId,
   IsNumber,
@@ -75,14 +76,24 @@ export class CreateOrderDto {
   @IsNumber()
   comission: number; //shiba comission
 
-  @ApiProperty({ description: 'total price in rubbles' })
-  @IsNumber()
-  totalPrice: number; //total price in rubbles
+  // @ApiProperty({ description: 'total price in rubbles' })
+  // @IsNumber()
+  // totalPrice: number; //total price in rubbles
 
   @ApiProperty({ description: 'order comment' })
   @IsString()
   @IsOptional()
   comment: string; //order comment
+
+  @ApiProperty({ description: 'show link for client' })
+  @IsBoolean()
+  @IsOptional()
+  showLink: boolean;
+
+  @ApiProperty({ description: 'show product price details' })
+  @IsBoolean()
+  @IsOptional()
+  showDetails: boolean;
 
   // @Prop({ required: true, default: OrderState.waitingPayment })
   // orderStatus: number; //order status

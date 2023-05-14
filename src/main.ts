@@ -3,16 +3,15 @@ import { NestFactory } from '@nestjs/core';
 const cookieParser = require('cookie-parser');
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { log, warn } from 'console';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // app.useGlobalFilters(new CustomExceptionsFilter());
-
   //@ts-ignore
   app.use(cookieParser());
   const configService = app.get(ConfigService);
-  const origin = configService.get('ORIGIN');
+
   const whitelist = [
     'https://shiba-shipping.netlify.app',
     'https://shiba-crm-backend.vercel.app',
@@ -21,17 +20,17 @@ async function bootstrap() {
   ];
   app.enableCors({
     origin: function (origin, callback) {
-      console.log('cors orgin', origin);
       if (!origin || whitelist.indexOf(origin) !== -1) {
-        console.log('cors success', origin);
+        log(`cors success; origin: ${origin}`);
         callback(null, true);
       } else {
-        console.log('cors failure');
+        warn(`cors failure; origin: ${origin}`);
         callback(new Error('Not allowed by CORS'));
       }
     },
     credentials: true,
   });
+
   const port = configService.get('PORT');
 
   const config = new DocumentBuilder()
