@@ -19,27 +19,33 @@ export class JwtAuthGuard implements CanActivate {
       );
       const request = context.switchToHttp().getRequest();
       if (!request.headers.authorization) {
-        warn('request auth header is empty');
+        // warn('request auth header is empty');
+        console.log('request auth header is empty');
         return false;
       }
       const [bearer, token] = request.headers.authorization.split(' ');
       if (bearer !== 'Bearer' || !token) {
-        warn(`bearer or toke is empty\n bearer:${bearer} token: ${token}`);
+        // warn(`bearer or toke is empty\n bearer:${bearer} token: ${token}`);
+        console.log(
+          `bearer or toke is empty\n bearer:${bearer} token: ${token}`,
+        );
         return false;
       }
       const user = this.jwtService.verify(token);
       if (!user) {
-        warn(`user not found`);
+        // warn(`user not found`);
+        console.log(`user not found`);
         return false;
       }
       request.user = user;
       if (!requiredRoles) {
-        log(`required roles are empty`);
+        // log(`required roles are empty`);
+        console.log(`required roles are empty`);
         return true;
       }
       return requiredRoles.includes(user.role);
     } catch (e) {
-      error(e);
+      console.log(e);
       return false;
     }
   }
