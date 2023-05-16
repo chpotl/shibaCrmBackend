@@ -59,7 +59,7 @@ export class AuthService {
         ),
         access_token: this.jwtService.sign(
           { id: payload.id, role: payload.role },
-          { expiresIn: '15m' },
+          { expiresIn: '1m' },
         ),
       };
     } catch (e) {
