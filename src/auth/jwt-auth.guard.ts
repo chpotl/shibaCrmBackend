@@ -1,4 +1,9 @@
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import {
+  CanActivate,
+  ExecutionContext,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { ROLES_KEY } from './roles-auth.decorator';
@@ -45,8 +50,7 @@ export class JwtAuthGuard implements CanActivate {
       }
       return requiredRoles.includes(user.role);
     } catch (e) {
-      console.log(e);
-      return false;
+      throw new InternalServerErrorException(e);
     }
   }
 }
