@@ -38,7 +38,7 @@ export class AuthService {
   private generateToken(payload: any, user: User) {
     return {
       refresh_token: this.jwtService.sign(payload, { expiresIn: '1d' }),
-      access_token: this.jwtService.sign(payload, { expiresIn: '1m' }),
+      access_token: this.jwtService.sign(payload, { expiresIn: '15m' }),
       user,
     };
   }
@@ -59,7 +59,7 @@ export class AuthService {
         ),
         access_token: this.jwtService.sign(
           { id: payload.id, role: payload.role },
-          { expiresIn: '1m' },
+          { expiresIn: '15m' },
         ),
       };
     } catch (e) {
