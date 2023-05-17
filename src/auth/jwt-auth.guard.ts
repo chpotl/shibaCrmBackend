@@ -1,8 +1,10 @@
 import {
   CanActivate,
   ExecutionContext,
+  ForbiddenException,
   Injectable,
   InternalServerErrorException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
@@ -24,33 +26,25 @@ export class JwtAuthGuard implements CanActivate {
       );
       const request = context.switchToHttp().getRequest();
       if (!request.headers.authorization) {
-        // warn('request auth header is empty');
-        console.log('request auth header is empty');
-        return false;
+        throw new UnauthorizedException('request auth header is empty');
       }
       const [bearer, token] = request.headers.authorization.split(' ');
       if (bearer !== 'Bearer' || !token) {
-        // warn(`bearer or toke is empty\n bearer:${bearer} token: ${token}`);
-        console.log(
+        throw new UnauthorizedException(
           `bearer or toke is empty\n bearer:${bearer} token: ${token}`,
         );
-        return false;
       }
       const user = this.jwtService.verify(token);
       if (!user) {
-        // warn(`user not found`);
-        console.log(`user not found`);
-        return false;
+        throw new UnauthorizedException(`user not found`);
       }
       request.user = user;
       if (!requiredRoles) {
-        // log(`required roles are empty`);
-        console.log(`required roles are empty`);
         return true;
       }
       return requiredRoles.includes(user.role);
     } catch (e) {
-      throw new InternalServerErrorException(e);
+      throw new UnauthorizedException(e);
     }
   }
 }
