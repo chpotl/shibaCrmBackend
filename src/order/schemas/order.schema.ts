@@ -6,17 +6,17 @@ import { Bank } from 'src/bank/schemas/bank.schema';
 import { DeliveryMethod } from 'src/delivery/schemas/delivery.schema';
 
 export enum OrderState {
-  waitingPayment = 'Ожидание оплаты',
-  paymentVerification = 'Подтверждение оплаты',
-  paid = 'Оплачен',
-  purchaseProcess = 'На закупке',
-  purchased = 'Закуплен',
-  deliveryToChina = 'Доставляется на склад в Китае',
-  inChina = 'На складе в Китае',
-  deliveryToRussia = 'Доставляется на склад РФ',
-  inRussia = 'На складе РФ',
-  finalDelivery = 'Доставляется клиенту',
-  finished = 'Завершен',
+  waitingPayment,
+  paymentVerification,
+  paid,
+  purchaseProcess,
+  purchased,
+  deliveryToChina,
+  inChina,
+  deliveryToRussia,
+  inRussia,
+  finalDelivery,
+  finished,
 }
 
 export enum Currency {
