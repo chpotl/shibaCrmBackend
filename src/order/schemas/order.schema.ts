@@ -142,7 +142,7 @@ export class Order extends Document {
     default: OrderState.waitingPayment,
     enum: OrderState,
   })
-  orderStatus: string; //order status
+  orderStatus: number; //order status
 
   @Prop({ type: PaymentMethodSchema })
   paymentMethod: PaymentMethod; //payment method chosen by user
