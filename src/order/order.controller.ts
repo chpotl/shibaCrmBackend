@@ -111,7 +111,7 @@ export class OrderController {
     @Param('id') orderId: string,
     @Query('status') status: OrderState,
   ) {
-    return this.orderService.updateOrderStatus(orderId, status);
+    return this.orderService.updateOrderStatus(orderId, +status);
   }
 
   @ApiTags('order')

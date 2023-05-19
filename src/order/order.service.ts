@@ -50,6 +50,9 @@ export class OrderService {
   }
 
   async updateOrderStatus(orderId: string, status: OrderState) {
+    if (!Number.isInteger(status)) {
+      throw new BadRequestException('status nust be int');
+    }
     const order = await this.orderModel.findById(orderId);
     if (!order) {
       return new NotFoundException('order not found');
