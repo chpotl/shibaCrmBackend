@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -118,6 +119,12 @@ export class OrderController {
   @Patch(':id')
   addOrderInfo(@Body() body: AddOrderInfoDto, @Param('id') orderId: string) {
     return this.orderService.addOrderInfo(orderId, body);
+  }
+
+  @ApiTags('order')
+  @Delete(':id')
+  deleteOrder(@Param('id') orderId: string) {
+    return this.orderService.deleteOrder(orderId);
   }
 
   @ApiTags('order')

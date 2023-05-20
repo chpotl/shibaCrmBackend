@@ -115,6 +115,11 @@ export class OrderService {
       .populate('deliveryInfo.delivery category subcategory paymentMethod.bank');
   }
 
+  async deleteOrder(orderId: string) {
+    return await this.orderModel
+      .deleteOne({id: orderId})
+  }
+
   async getAllCategories() {
     const res = await this.categoryModel.find().populate('subcategory');
     return res;
