@@ -112,7 +112,7 @@ export class OrderService {
   async getOrderById(orderId: string) {
     return await this.orderModel
       .findById(orderId)
-      .populate('deliveryInfo.delivery category subcategory');
+      .populate('deliveryInfo.delivery category subcategory paymentMethod.bank');
   }
 
   async getAllCategories() {
