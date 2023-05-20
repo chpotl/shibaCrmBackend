@@ -20,7 +20,6 @@ import { fileMimetypeFilter } from '../utils/file-mimetype-filter';
 export class FilesController {
   constructor(private readonly filesService: FilesService) {}
 
-  @UseGuards(JwtAuthGuard)
   @ApiConsumes('multipart/form-data')
   @ApiBody({
     schema: {
