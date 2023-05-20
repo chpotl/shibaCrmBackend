@@ -6,17 +6,16 @@ import { Bank } from 'src/bank/schemas/bank.schema';
 import { DeliveryMethod } from 'src/delivery/schemas/delivery.schema';
 
 export enum OrderState {
-  waitingPayment,
-  paymentVerification,
-  paid,
-  purchaseProcess,
-  purchased,
-  deliveryToChina,
-  inChina,
-  deliveryToRussia,
-  inRussia,
-  finalDelivery,
-  finished,
+  waitingPayment, // - Ожидается оплата
+  paymentVerification,// - Подтверждение оплаты
+  paid,// - Оплачено
+  deliveryToForeignWarehouse,// - Доставляется на зарубежный склад
+  inForeignWarehouse,// - Готовится к отправке в РФ
+  deliveryToRussia,// - Отправлено в РФ (Обычно этот этап занимает 8-14 дней)
+  sortingCenter,// - В сортировочном центре
+  inShiba,// - На складе Shiba
+  clientDelivery,// - Доставляется транспортной компанией
+  finished,// - Завершен
 }
 
 export enum Currency {

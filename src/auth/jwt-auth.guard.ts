@@ -42,7 +42,10 @@ export class JwtAuthGuard implements CanActivate {
       if (!requiredRoles) {
         return true;
       }
-      return requiredRoles.includes(user.role);
+      if(!requiredRoles.includes(user.role)){
+        throw new ForbiddenException('not enought access')
+      }
+      return true;
     } catch (e) {
       throw new UnauthorizedException(e);
     }
