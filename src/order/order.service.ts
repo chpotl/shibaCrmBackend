@@ -116,8 +116,11 @@ export class OrderService {
   }
 
   async deleteOrder(orderId: string) {
-    return await this.orderModel
-      .deleteOne({id: orderId})
+    const res = await this.orderModel.findById(orderId)
+    if(!res){
+      throw new NotFoundException(`order with id:${orderId} not found`)
+    }
+    return await this.orderModel.findByIdAndRemove(orderId);
   }
 
   async getAllCategories() {
