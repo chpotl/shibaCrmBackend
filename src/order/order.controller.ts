@@ -121,6 +121,7 @@ export class OrderController {
     return this.orderService.addOrderInfo(orderId, body);
   }
 
+  @UseGuards(JwtAuthGuard)
   @ApiTags('order')
   @Delete(':id')
   deleteOrder(@Param('id') orderId: string) {
