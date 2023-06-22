@@ -70,7 +70,7 @@ export class OrderService {
   }
 
   async getAllOrders() {
-    return await this.orderModel.find();
+    return await this.orderModel.find().sort({ createdAt: 1 });
   }
 
   async getAllOrdersWithQuery(
@@ -106,19 +106,22 @@ export class OrderService {
       .find(options)
       .limit(_limit)
       .skip((_page - 1) * _limit)
+      .sort({ createdAt: 1 })
       .populate('deliveryInfo.delivery category subcategory');
   }
 
   async getOrderById(orderId: string) {
     return await this.orderModel
       .findById(orderId)
-      .populate('deliveryInfo.delivery category subcategory paymentMethod.bank');
+      .populate(
+        'deliveryInfo.delivery category subcategory paymentMethod.bank',
+      );
   }
 
   async deleteOrder(orderId: string) {
-    const res = await this.orderModel.findById(orderId)
-    if(!res){
-      throw new NotFoundException(`order with id:${orderId} not found`)
+    const res = await this.orderModel.findById(orderId);
+    if (!res) {
+      throw new NotFoundException(`order with id:${orderId} not found`);
     }
     return await this.orderModel.findByIdAndRemove(orderId);
   }
