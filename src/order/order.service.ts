@@ -70,7 +70,7 @@ export class OrderService {
   }
 
   async getAllOrders() {
-    return await this.orderModel.find().sort({ createdAt: 1 });
+    return await this.orderModel.find().sort({ createdAt: -1 });
   }
 
   async getAllOrdersWithQuery(
@@ -106,7 +106,7 @@ export class OrderService {
       .find(options)
       .limit(_limit)
       .skip((_page - 1) * _limit)
-      .sort({ createdAt: 1 })
+      .sort({ createdAt: -1 })
       .populate('deliveryInfo.delivery category subcategory');
   }
 
