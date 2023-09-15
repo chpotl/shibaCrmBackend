@@ -7,15 +7,15 @@ import { DeliveryMethod } from 'src/delivery/schemas/delivery.schema';
 
 export enum OrderState {
   waitingPayment, // - Ожидается оплата
-  paymentVerification,// - Подтверждение оплаты
-  paid,// - Оплачено
-  deliveryToForeignWarehouse,// - Доставляется на зарубежный склад
-  inForeignWarehouse,// - Готовится к отправке в РФ
-  deliveryToRussia,// - Отправлено в РФ (Обычно этот этап занимает 8-14 дней)
-  sortingCenter,// - В сортировочном центре
-  inShiba,// - На складе Shiba
-  clientDelivery,// - Доставляется транспортной компанией
-  finished,// - Завершен
+  paymentVerification, // - Подтверждение оплаты
+  paid, // - Оплачено
+  deliveryToForeignWarehouse, // - Доставляется на зарубежный склад
+  inForeignWarehouse, // - Готовится к отправке в РФ
+  deliveryToRussia, // - Отправлено в РФ (Обычно этот этап занимает 8-14 дней)
+  sortingCenter, // - В сортировочном центре
+  inShiba, // - На складе Shiba
+  clientDelivery, // - Доставляется транспортной компанией
+  finished, // - Завершен
 }
 
 export enum Currency {
@@ -74,6 +74,9 @@ const DeliveryInfoSchema = SchemaFactory.createForClass(DeliveryInfo);
   },
 })
 export class Order extends Document {
+  @Prop()
+  id: string;
+
   @Prop({ required: true })
   url: string; //link to poizon/stockx/farfetch
 
@@ -180,6 +183,10 @@ OrderSchema.virtual('totalPrice').get(function (this: Order & Document) {
     this.insurance +
     this.comission
   );
+});
+
+OrderSchema.pre('save', function (this: Order) {
+  this.id = this._id.toString();
 });
 
 export { OrderSchema };

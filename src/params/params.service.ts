@@ -29,7 +29,6 @@ export class ParamsService {
 
   async update(updateParamsDto: UpdateParamsDto) {
     if (!Object.keys(updateParamsDto).length) {
-      console.log(updateParamsDto);
       return new BadRequestException('fields are incorrect');
     }
     return await this.paramsModel.updateOne({}, updateParamsDto, { new: true });

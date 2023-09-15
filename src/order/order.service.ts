@@ -25,7 +25,6 @@ export class OrderService {
   ) {}
 
   async createOrder(managerId: string, createOrderDto: CreateOrderDto) {
-    console.log(createOrderDto);
     return await this.orderModel.create({
       manager: managerId,
       ...createOrderDto,
@@ -84,6 +83,7 @@ export class OrderService {
       const regEx = new RegExp(search, 'i');
       options = {
         $or: [
+          { id: regEx },
           { url: regEx },
           { brand: regEx },
           { model: regEx },
