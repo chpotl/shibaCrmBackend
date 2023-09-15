@@ -32,6 +32,10 @@ class DeliveryInfo {
 
   @ApiProperty()
   @IsString()
+  city: string;
+
+  @ApiProperty()
+  @IsString()
   address: string;
 
   @ApiProperty()

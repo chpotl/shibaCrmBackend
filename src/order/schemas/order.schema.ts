@@ -56,6 +56,9 @@ class DeliveryInfo extends Document {
   phone: string;
 
   @Prop({ required: true })
+  city: string;
+
+  @Prop({ required: true })
   address: string;
 
   @Prop({
