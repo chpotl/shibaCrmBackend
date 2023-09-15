@@ -9,6 +9,7 @@ export enum OrderState {
   waitingPayment, // - Ожидается оплата
   paymentVerification, // - Подтверждение оплаты
   paid, // - Оплачено
+  paidPartially, // - Оплачено частями
   deliveryToForeignWarehouse, // - Доставляется на зарубежный склад
   inForeignWarehouse, // - Готовится к отправке в РФ
   deliveryToRussia, // - Отправлено в РФ (Обычно этот этап занимает 8-14 дней)
