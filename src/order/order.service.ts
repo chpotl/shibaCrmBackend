@@ -68,6 +68,20 @@ export class OrderService {
     );
   }
 
+  async updateOrderComment(orderId: string, comment: string) {
+    const order = await this.orderModel.findById(orderId);
+    if (!order) {
+      return new NotFoundException('order not found');
+    }
+    return await this.orderModel.findByIdAndUpdate(
+      orderId,
+      {
+        $set: { comment },
+      },
+      { new: true },
+    );
+  }
+
   async getAllOrders() {
     return await this.orderModel.find().sort({ createdAt: -1 });
   }

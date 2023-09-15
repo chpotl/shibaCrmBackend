@@ -25,6 +25,7 @@ import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { fileMimetypeFilter } from '../utils/file-mimetype-filter';
 import { excangeRates } from '../utils/exchange-rates';
 import { OrderState } from './schemas/order.schema';
+import { UpdateOrderComment } from './dtos/update-order-comment.dto';
 
 @ApiBearerAuth()
 @Controller('order')
@@ -113,6 +114,16 @@ export class OrderController {
     @Query('status') status: OrderState,
   ) {
     return this.orderService.updateOrderStatus(orderId, +status);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiTags('order')
+  @Patch('/comment/:id')
+  updateOrderComment(
+    @Param('id') orderId: string,
+    @Body() body: UpdateOrderComment,
+  ) {
+    return this.orderService.updateOrderComment(orderId, body.comment);
   }
 
   @ApiTags('order')
