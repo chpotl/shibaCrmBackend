@@ -13,7 +13,7 @@ class ContactInfo {
   name: string;
 
   @ApiProperty()
-  @IsPhoneNumber()
+  @IsString()
   phone: string;
 
   @ApiProperty()
@@ -27,7 +27,7 @@ class DeliveryInfo {
   name: string;
 
   @ApiProperty()
-  @IsPhoneNumber()
+  @IsString()
   phone: string;
 
   @ApiProperty()
