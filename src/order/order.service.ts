@@ -31,6 +31,20 @@ export class OrderService {
     });
   }
 
+  async updateIsPaidPartially(orderId: string, isPaidPartially: boolean) {
+    const order = await this.orderModel.findById(orderId);
+    if (!order) {
+      return new NotFoundException('order not found');
+    }
+    return await this.orderModel.findByIdAndUpdate(
+      orderId,
+      {
+        $set: { isPaidPartially },
+      },
+      { new: true },
+    );
+  }
+
   async addOrderInfo(orderId: string, addOrderInfoDto: AddOrderInfoDto) {
     const order = await this.orderModel.findById(orderId);
     if (!order) {

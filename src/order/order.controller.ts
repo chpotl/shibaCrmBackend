@@ -126,6 +126,16 @@ export class OrderController {
     return this.orderService.updateOrderComment(orderId, body.comment);
   }
 
+  @UseGuards(JwtAuthGuard)
+  @ApiTags('order')
+  @Patch('/isPaidPartially/:id')
+  updateIsPaidPartially(
+    @Param('id') orderId: string,
+    @Query('status') status: boolean,
+  ) {
+    return this.orderService.updateIsPaidPartially(orderId, status);
+  }
+
   @ApiTags('order')
   @Patch(':id')
   addOrderInfo(@Body() body: AddOrderInfoDto, @Param('id') orderId: string) {

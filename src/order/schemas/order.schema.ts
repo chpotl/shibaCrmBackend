@@ -9,7 +9,6 @@ export enum OrderState {
   waitingPayment, // - Ожидается оплата
   paymentVerification, // - Подтверждение оплаты
   paid, // - Оплачено
-  paidPartially, // - Оплачено частями
   deliveryToForeignWarehouse, // - Доставляется на зарубежный склад
   inForeignWarehouse, // - Готовится к отправке в РФ
   deliveryToRussia, // - Отправлено в РФ (Обычно этот этап занимает 8-14 дней)
@@ -149,6 +148,12 @@ export class Order extends Document {
     enum: OrderState,
   })
   orderStatus: number; //order status
+
+  @Prop({
+    required: true,
+    default: false,
+  })
+  isPaidPartially: boolean; //isPaidPartially
 
   @Prop({ type: PaymentMethodSchema })
   paymentMethod: PaymentMethod; //payment method chosen by user
