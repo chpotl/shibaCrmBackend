@@ -26,6 +26,5 @@ import { MulterModule } from '@nestjs/platform-express';
   ],
   controllers: [OrderController],
   providers: [OrderService],
-  exports: [OrderService],
 })
 export class OrderModule {}

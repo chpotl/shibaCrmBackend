@@ -9,7 +9,10 @@ import {
   Put,
   Query,
   Req,
+  UploadedFile,
+  UploadedFiles,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { CreateCategoryDto } from './dtos/create-category.dto';
@@ -17,7 +20,9 @@ import { CreateSubcategoryDto } from './dtos/create-subcategory.dto';
 import { CreateOrderDto } from './dtos/create-order.dto';
 import { AddOrderInfoDto } from './dtos/add-orderinfo.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiConsumes, ApiQuery, ApiTags } from '@nestjs/swagger';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
+import { fileMimetypeFilter } from '../utils/file-mimetype-filter';
 import { excangeRates } from '../utils/exchange-rates';
 import { OrderState } from './schemas/order.schema';
 import { UpdateOrderComment } from './dtos/update-order-comment.dto';
