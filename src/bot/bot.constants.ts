@@ -1,5 +1,5 @@
 import { Order } from 'src/order/schemas/order.schema';
-import { getOrderStatusStr } from 'src/utils/getOrderStatusString';
+import { getOrderStatusStr } from '../utils/getOrderStatusString';
 import { Markup } from 'telegraf';
 
 export const BotName = 'ShibaBot';

@@ -1,9 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { BotService } from './bot.service';
-import { BotMessage } from './bot.utils';
 import { Order } from 'src/order/schemas/order.schema';
-import { getOrderStatusStr } from 'src/utils/getOrderStatusString';
 import { TEXT } from './bot.constants';
 
 @Injectable()
