@@ -62,7 +62,9 @@ async function bootstrap() {
     console.log(
       `ENV="${configService.get(
         'NODE_ENV',
-      )}", Server started on port = ${port}, url=${process.env.VERCEL_URL}`,
+      )}", Server started on port = ${port}, url=${
+        process.env.RENDER_EXTERNAL_HOSTNAME
+      }`,
     );
   });
 }

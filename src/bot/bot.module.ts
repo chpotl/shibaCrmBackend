@@ -27,7 +27,7 @@ import { session } from 'telegraf';
             domain:
               process.env.NODE_ENV === 'dev'
                 ? process.env.BOT_WEBHOOK
-                : `https://${process.env.VERCEL_URL}`,
+                : `https://${process.env.RENDER_EXTERNAL_HOSTNAME}`,
             path: '/bot',
           },
         },
