@@ -1,4 +1,4 @@
-import { OrderState } from 'src/order/schemas/order.schema';
+import { OrderState } from '../order/schemas/order.schema';
 
 const orderStatusStr = [
   'Ожидается оплата',
