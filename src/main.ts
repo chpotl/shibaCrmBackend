@@ -4,9 +4,14 @@ const cookieParser = require('cookie-parser');
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { log, warn } from 'console';
+import { getBotToken } from 'nestjs-telegraf';
+import { BotName } from './bot/bot.constants';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  const bot = app.get(getBotToken(BotName));
+  app.use(bot.webhookCallback('/bot'));
 
   //@ts-ignore
   app.use(cookieParser());
@@ -55,10 +60,9 @@ async function bootstrap() {
   });
   await app.listen(port, () => {
     console.log(
-      'ENV="' +
-        configService.get('NODE_ENV') +
-        '", Server started on port = ' +
-        port,
+      `ENV="${configService.get(
+        'NODE_ENV',
+      )}", Server started on port = ${port}, url=${process.env.VERCEL_URL}`,
     );
   });
 }
