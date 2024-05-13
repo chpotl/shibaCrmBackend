@@ -22,12 +22,6 @@ import { BotListener } from './bot.listener';
         token: process.env.BOT_TOKEN,
         middlewares: [botMiddleware],
         include: [BotModule],
-        launchOptions: {
-          webhook: {
-            domain: 'https://shiba-crm-backend.vercel.app',
-            path: '/bot',
-          },
-        },
       }),
     }),
     OrderModule,

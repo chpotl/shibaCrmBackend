@@ -55,9 +55,6 @@ async function bootstrap() {
     ],
   });
 
-  const bot = app.get(getBotToken());
-  app.use(bot.webhookCallback('/bot'));
-
   await app.listen(port);
 }
 bootstrap();
