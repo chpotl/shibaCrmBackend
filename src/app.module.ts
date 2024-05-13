@@ -12,6 +12,9 @@ import { DeliveryModule } from './delivery/delivery.module';
 import { PromocodeModule } from './promocode/promocode.module';
 import { ParamsModule } from './params/params.module';
 import { FilesModule } from './files/files.module';
+import { TelegrafModule } from 'nestjs-telegraf';
+import { BotModule } from './bot/bot.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
   imports: [
@@ -27,6 +30,8 @@ import { FilesModule } from './files/files.module';
     PromocodeModule,
     ParamsModule,
     FilesModule,
+    BotModule,
+    EventEmitterModule.forRoot(),
   ],
   controllers: [AppController],
   providers: [
