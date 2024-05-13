@@ -4,7 +4,6 @@ const cookieParser = require('cookie-parser');
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { log, warn } from 'console';
-import { getBotToken } from 'nestjs-telegraf';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
