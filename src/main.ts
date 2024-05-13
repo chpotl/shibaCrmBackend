@@ -4,7 +4,6 @@ const cookieParser = require('cookie-parser');
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { log, warn } from 'console';
-import { getBotToken } from 'nestjs-telegraf';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -54,7 +53,13 @@ async function bootstrap() {
       'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.css',
     ],
   });
-
-  await app.listen(port);
+  await app.listen(port, () => {
+    console.log(
+      'ENV="' +
+        configService.get('NODE_ENV') +
+        '", Server started on port = ' +
+        port,
+    );
+  });
 }
 bootstrap();
