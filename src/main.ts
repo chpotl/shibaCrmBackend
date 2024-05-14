@@ -53,7 +53,14 @@ async function bootstrap() {
       'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.css',
     ],
   });
-
-  await app.listen(port);
+  await app.listen(port, () => {
+    console.log(
+      `ENV="${configService.get(
+        'NODE_ENV',
+      )}", Server started on port = ${port}, url=${
+        process.env.RENDER_EXTERNAL_HOSTNAME
+      }`,
+    );
+  });
 }
 bootstrap();

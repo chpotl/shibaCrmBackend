@@ -14,6 +14,7 @@ import { AddOrderInfoDto } from './dtos/add-orderinfo.dto';
 import * as fs from 'fs';
 import { join } from 'path';
 import { AddOrderInfo } from './interfaces/add-order-info.interface';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Injectable()
 export class OrderService {
@@ -22,6 +23,7 @@ export class OrderService {
     @InjectModel(Category.name) private readonly categoryModel: Model<Category>,
     @InjectModel(Subcategory.name)
     private readonly subcategoryModel: Model<Subcategory>,
+    private eventEmitter: EventEmitter2,
   ) {}
 
   async createOrder(managerId: string, createOrderDto: CreateOrderDto) {
@@ -50,7 +52,8 @@ export class OrderService {
     if (!order) {
       return new NotFoundException('order not found');
     }
-    return await this.orderModel.findByIdAndUpdate(
+
+    const newOrder = await this.orderModel.findByIdAndUpdate(
       orderId,
       {
         ...addOrderInfoDto,
@@ -60,6 +63,10 @@ export class OrderService {
         new: true,
       },
     );
+
+    this.eventEmitter.emit('bot.sentNewOrder', newOrder);
+
+    return newOrder;
   }
 
   async updateOrderStatus(orderId: string, status: OrderState) {
@@ -73,13 +80,18 @@ export class OrderService {
     if (!Object.values(OrderState).includes(status)) {
       return new BadRequestException('state dosent exist');
     }
-    return await this.orderModel.findByIdAndUpdate(
+
+    const newOrder = await this.orderModel.findByIdAndUpdate(
       orderId,
       {
         $set: { orderStatus: status },
       },
       { new: true },
     );
+
+    this.eventEmitter.emit('bot.sentStatusChanage', newOrder);
+
+    return newOrder;
   }
 
   async updateOrderComment(orderId: string, comment: string) {
@@ -98,6 +110,10 @@ export class OrderService {
 
   async getAllOrders() {
     return await this.orderModel.find().sort({ createdAt: -1 });
+  }
+
+  async getAllOrdersByUserTg(telegram: string) {
+    return await this.orderModel.find({ 'contactInfo.telegram': telegram });
   }
 
   async getAllOrdersWithQuery(
@@ -147,10 +163,11 @@ export class OrderService {
   }
 
   async deleteOrder(orderId: string) {
-    const res = await this.orderModel.findById(orderId);
-    if (!res) {
+    const order = await this.orderModel.findById(orderId);
+    if (!order) {
       throw new NotFoundException(`order with id:${orderId} not found`);
     }
+    this.eventEmitter.emit('bot.sentCancelOrder', order);
     return await this.orderModel.findByIdAndRemove(orderId);
   }
 

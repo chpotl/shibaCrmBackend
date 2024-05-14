@@ -12,10 +12,13 @@ import { DeliveryModule } from './delivery/delivery.module';
 import { PromocodeModule } from './promocode/promocode.module';
 import { ParamsModule } from './params/params.module';
 import { FilesModule } from './files/files.module';
+import { BotModule } from './bot/bot.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
+      envFilePath: [`.env.${process.env.NODE_ENV}`],
       isGlobal: true,
     }),
     MongooseModule.forRoot(process.env.DB_CONNECT),
@@ -27,6 +30,8 @@ import { FilesModule } from './files/files.module';
     PromocodeModule,
     ParamsModule,
     FilesModule,
+    BotModule,
+    EventEmitterModule.forRoot(),
   ],
   controllers: [AppController],
   providers: [
