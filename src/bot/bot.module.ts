@@ -22,15 +22,15 @@ import { session } from 'telegraf';
         token: process.env.BOT_TOKEN,
         middlewares: [session()],
         include: [BotModule],
-        launchOptions: {
-          webhook: {
-            domain:
-              process.env.NODE_ENV === 'dev'
-                ? process.env.BOT_WEBHOOK
-                : `https://${process.env.RENDER_EXTERNAL_HOSTNAME}`,
-            path: '/bot',
-          },
-        },
+        // launchOptions: {
+        //   webhook: {
+        //     domain:
+        //       process.env.NODE_ENV === 'dev'
+        //         ? process.env.BOT_WEBHOOK
+        //         : `https://${process.env.RENDER_EXTERNAL_HOSTNAME}`,
+        //     path: '/bot',
+        //   },
+        // },
       }),
     }),
     OrderModule,
