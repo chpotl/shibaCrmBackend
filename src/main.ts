@@ -15,6 +15,7 @@ async function bootstrap() {
   const whitelist = [
     'https://shiba-shipping.netlify.app',
     'https://shiba-crm-backend.vercel.app',
+    'https://shibacrmbackend.onrender.com',
     'http://localhost:3000',
     'http://localhost:3030',
   ];
