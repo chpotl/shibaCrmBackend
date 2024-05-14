@@ -10,9 +10,6 @@ import { BotName } from './bot/bot.constants';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // const bot = app.get(getBotToken(BotName));
-  // app.use(bot.webhookCallback('/bot'));
-
   //@ts-ignore
   app.use(cookieParser());
   const configService = app.get(ConfigService);
