@@ -18,7 +18,6 @@ export class BotUpdate {
 
   @Start()
   async onStart(@Ctx() ctx: Context) {
-    console.log('Start event', ctx);
     ctx.session.messageId = undefined;
     await this.botService.start(ctx);
     return;
