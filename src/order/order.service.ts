@@ -53,9 +53,9 @@ export class OrderService {
       return new NotFoundException('order not found');
     }
 
-    addOrderInfoDto.contactInfo.telegram = addOrderInfoDto.contactInfo.telegram
-      .replace('@', '')
-      .replace('t.me/', '');
+    const match =
+      addOrderInfoDto.contactInfo.telegram.match(/[a-zA-Z0-9_]{5,}/);
+    addOrderInfoDto.contactInfo.telegram = match ? match[0] : '';
 
     const newOrder = await this.orderModel.findByIdAndUpdate(
       orderId,

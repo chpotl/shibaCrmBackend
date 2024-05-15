@@ -59,15 +59,9 @@ export class BotService {
       },
     );
 
-    const buttons = [BUTTONS.ABOUT, BUTTONS.CONTACTS, BUTTONS.TRACK];
+    const buttons = [BUTTONS.CONTACTS, BUTTONS.TRACK];
     const inlineButtons = Markup.inlineKeyboard(buttons);
     return replyOrEdit(ctx, TEXT.START(ctx.from.username), inlineButtons);
-  }
-
-  async about(ctx: Context) {
-    const buttons = [BUTTONS.MAIN_MENU];
-    const inlineButtons = Markup.inlineKeyboard(buttons);
-    return replyOrEdit(ctx, TEXT.ABOUT, inlineButtons);
   }
 
   async contacts(ctx: Context) {

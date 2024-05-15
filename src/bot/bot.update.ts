@@ -23,11 +23,6 @@ export class BotUpdate {
     return;
   }
 
-  @Action(COMMANDS.ABOUT)
-  async onAbout(@Ctx() context: Context) {
-    await context.scene.enter(SCENE.ABOUT);
-  }
-
   @Action(COMMANDS.CONTACTS)
   async onContacts(@Ctx() context: Context) {
     await context.scene.enter(SCENE.CONTACTS);
