@@ -53,6 +53,10 @@ export class OrderService {
       return new NotFoundException('order not found');
     }
 
+    addOrderInfoDto.contactInfo.telegram = addOrderInfoDto.contactInfo.telegram
+      .replace('@', '')
+      .replace('t.me/', '');
+
     const newOrder = await this.orderModel.findByIdAndUpdate(
       orderId,
       {
