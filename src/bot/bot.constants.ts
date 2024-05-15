@@ -55,7 +55,7 @@ export const TEXT = {
       order.model
     } - ${order.size}</b>\nНовый статус: <b>${getOrderStatusStr(
       order.orderStatus,
-    ).toLowerCase()}</b>`;
+    )}</b>`;
   },
   NEW_ORDER: (order: Order) => {
     return `🎉 <b>Получен новый заказ <a href="https://shiba-shipping.netlify.app/order/${
