@@ -117,7 +117,10 @@ export class OrderService {
   }
 
   async getAllOrdersByUserTg(telegram: string) {
-    return await this.orderModel.find({ 'contactInfo.telegram': telegram });
+    return await this.orderModel.find({
+      'contactInfo.telegram': telegram,
+      orderStatus: { $ne: 9 },
+    });
   }
 
   async getAllOrdersWithQuery(
