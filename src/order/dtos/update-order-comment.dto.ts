@@ -5,4 +5,8 @@ export class UpdateOrderComment {
   @ApiProperty()
   @IsString()
   comment: string;
+
+  @ApiProperty()
+  @IsString()
+  track: string;
 }

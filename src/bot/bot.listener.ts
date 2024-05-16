@@ -34,4 +34,13 @@ export class BotListener {
 
     this.botService.sendBaseMessage({ chatId, text: TEXT.CANCEL_ORDER(order) });
   }
+
+  @OnEvent('bot.sentNewTrack')
+  async handleBotNewTrack(order: Order) {
+    const chatId = await this.botService.getChatIdByUsername(
+      order.contactInfo.telegram,
+    );
+
+    this.botService.sendBaseMessage({ chatId, text: TEXT.NEW_TRACK(order) });
+  }
 }

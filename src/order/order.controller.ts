@@ -118,7 +118,7 @@ export class OrderController {
     @Param('id') orderId: string,
     @Body() body: UpdateOrderComment,
   ) {
-    return this.orderService.updateOrderComment(orderId, body.comment);
+    return this.orderService.updateOrderComment(orderId, body);
   }
 
   @UseGuards(JwtAuthGuard)

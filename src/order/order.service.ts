@@ -15,6 +15,7 @@ import * as fs from 'fs';
 import { join } from 'path';
 import { AddOrderInfo } from './interfaces/add-order-info.interface';
 import { EventEmitter2 } from '@nestjs/event-emitter';
+import { UpdateOrderComment } from './dtos/update-order-comment.dto';
 
 @Injectable()
 export class OrderService {
@@ -98,18 +99,22 @@ export class OrderService {
     return newOrder;
   }
 
-  async updateOrderComment(orderId: string, comment: string) {
+  async updateOrderComment(orderId: string, body: UpdateOrderComment) {
     const order = await this.orderModel.findById(orderId);
     if (!order) {
       return new NotFoundException('order not found');
     }
-    return await this.orderModel.findByIdAndUpdate(
+    const newOrder = await this.orderModel.findByIdAndUpdate(
       orderId,
       {
-        $set: { comment },
+        $set: { comment: body.comment, 'deliveryInfo.track': body.track },
       },
       { new: true },
     );
+    if (order.deliveryInfo.track != newOrder.deliveryInfo.track) {
+      this.eventEmitter.emit('bot.sentNewTrack', newOrder);
+    }
+    return newOrder;
   }
 
   async getAllOrders() {

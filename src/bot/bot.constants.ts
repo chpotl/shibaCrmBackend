@@ -36,7 +36,7 @@ export const TEXT = {
             response +
             `📦 Заказ <a href="https://shiba-shipping.netlify.app/order/${
               order.id
-            }">${order.id.slice(-4)}</a>\nНазвание: <b>${order.brand} ${
+            }">[${order.id.slice(-4)}]</a>\nНазвание: <b>${order.brand} ${
               order.model
             } - ${order.size}</b>\nСтатус: <b>${getOrderStatusStr(
               order.orderStatus,
@@ -68,5 +68,12 @@ export const TEXT = {
     return `❌ <b>Заказ [${order.id.slice(
       -4,
     )}] был отменен</b>\n\nЕсли произошла ошибка, пожалуйста свяжитесь с менеджером @shibaorder`;
+  },
+  NEW_TRACK: (order: Order) => {
+    return `🚚 <b> Присвоен трек-номер заказу <a href="https://shiba-shipping.netlify.app/order/${
+      order.id
+    }">[${order.id.slice(-4)}]</a></b>\nНазвание: <b>${order.brand} ${
+      order.model
+    } - ${order.size}</b>\nТрек-номер СДЭК: <b>${order.deliveryInfo.track}</b>`;
   },
 };

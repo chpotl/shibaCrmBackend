@@ -67,6 +67,9 @@ class DeliveryInfo extends Document {
     ref: 'DeliveryMethod',
   })
   delivery: DeliveryMethod;
+
+  @Prop({ default: '' })
+  track: string;
 }
 const DeliveryInfoSchema = SchemaFactory.createForClass(DeliveryInfo);
 
