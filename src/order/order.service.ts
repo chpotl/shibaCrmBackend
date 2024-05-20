@@ -107,7 +107,11 @@ export class OrderService {
     const newOrder = await this.orderModel.findByIdAndUpdate(
       orderId,
       {
-        $set: { comment: body.comment, 'deliveryInfo.track': body.track },
+        $set: {
+          comment: body.comment,
+          'deliveryInfo.track': body.track,
+          'contactInfo.telegram': body.telegram,
+        },
       },
       { new: true },
     );

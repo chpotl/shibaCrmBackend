@@ -9,4 +9,8 @@ export class UpdateOrderComment {
   @ApiProperty()
   @IsString()
   track: string;
+
+  @ApiProperty()
+  @IsString()
+  telegram: string;
 }
