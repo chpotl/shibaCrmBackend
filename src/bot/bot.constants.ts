@@ -42,7 +42,7 @@ export const TEXT = {
               order.orderStatus,
             )}</b>\nДней в пути: <b>${(
               (Date.now() - new Date(order.createdAt).getTime()) /
-              8640000
+              86400000
             ).toFixed(0)}</b>\n\n`
           );
         }, `🟢 Активные заказы:\n\n`)
