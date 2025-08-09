@@ -16,8 +16,7 @@ async function bootstrap() {
     'https://shiba-shipping.netlify.app',
     'https://shiba-crm-backend.vercel.app',
     'https://shibacrmbackend.onrender.com',
-    'http://localhost:3000',
-    'http://localhost:3030',
+    'https://shiba-app.onrender.com',
   ];
   app.enableCors({
     origin: function (origin, callback) {
