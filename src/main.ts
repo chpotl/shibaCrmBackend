@@ -17,6 +17,7 @@ async function bootstrap() {
     'https://shiba-crm-backend.vercel.app',
     'https://shibacrmbackend.onrender.com',
     'https://shiba-app.onrender.com',
+    'https://shibaorder.ru',
   ];
   app.enableCors({
     origin: function (origin, callback) {
